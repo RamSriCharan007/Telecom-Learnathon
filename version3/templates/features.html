@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Analyse Features · Placement Predict System{% endblock %}
+
+{% block content %}
+  <section class="stage-hero">
+    <p class="eyebrow">{{ step.eyebrow }}</p>
+    <h1>{{ step.label }}</h1>
+    <p class="hero-sub">{{ step.note }}</p>
+  </section>
+
+  <div class="perforation" aria-hidden="true"></div>
+
+  <section class="features-section">
+
+    {% if not has_dataset %}
+    <div class="alert alert-error">
+      <span class="alert-tag mono">No dataset</span>
+      <span>Nothing is loaded yet. <a href="{{ url_for('upload_dataset') }}">Upload a dataset on Stage 01</a> first,
+        then come back here.</span>
+    </div>
+    {% else %}
+
+    <div class="loaded-header loaded-header-compact">
+      <span class="badge-loaded mono">Loaded</span>
+      <span class="loaded-name mono">{{ dataset_name }}</span>
+      <span class="loaded-meta">{{ feature_options|length }} columns available</span>
+    </div>
+
+    <form class="feature-form" id="featureForm" onsubmit="return false;">
+      <div class="field-group">
+        <label for="featureSelect">Feature</label>
+        <select id="featureSelect" class="dropdown">
+          <option value="" disabled selected>Choose a feature…</option>
+          {% for feat in feature_options %}
+          <option value="{{ feat.name }}" data-numeric="{{ 'true' if feat.numeric else 'false' }}" data-dtype="{{ feat.dtype }}">
+            {{ feat.name }} ({{ feat.dtype }})
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="methodSelect">Analysis method</label>
+        <select id="methodSelect" class="dropdown">
+          <option value="" disabled selected>Choose a method…</option>
+          {% for method in analysis_methods %}
+          <option value="{{ method.id }}" data-numeric-only="{{ 'true' if method.numeric_only else 'false' }}">
+            {{ method.label }}{{ ' (numeric only)' if method.numeric_only else '' }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="runAnalysisBtn">Run analysis</button>
+    </form>
+
+    <p class="field-hint" id="numericHint" hidden>
+      This method only applies to numeric features — pick a numeric column, or switch method.
+    </p>
+
+    <div class="result-panel" id="resultPanel" hidden>
+      <div class="result-header">
+        <h3 id="resultTitle">—</h3>
+        <span class="badge-loaded mono" id="resultStatus"></span>
+      </div>
+      <div id="resultBody"></div>
+    </div>
+
+    <div class="result-panel result-panel-empty" id="emptyPanel">
+      <p>Pick a feature and a method above, then run the analysis. Results — a chart or a stats
+        table — render right here without leaving the page.</p>
+    </div>
+
+    {% endif %}
+
+  </section>
+{% endblock %}

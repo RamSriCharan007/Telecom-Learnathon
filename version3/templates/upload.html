@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Upload Dataset · Placement Predict System{% endblock %}
+
+{% block content %}
+  <section class="stage-hero">
+    <p class="eyebrow">{{ step.eyebrow }}</p>
+    <h1>{{ step.label }}</h1>
+    <p class="hero-sub">{{ step.note }}</p>
+  </section>
+
+  <div class="perforation" aria-hidden="true"></div>
+
+  <section class="upload-section">
+
+    {% if error %}
+    <div class="alert alert-error">
+      <span class="alert-tag mono">Error</span>
+      <span>{{ error }}</span>
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('upload_dataset') }}" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+      <label for="datasetInput" class="upload-drop" id="uploadDrop">
+        <span class="upload-drop-title">Drop a file here, or click to browse</span>
+        <span class="upload-drop-hint mono">.csv &nbsp;·&nbsp; .xlsx &nbsp;·&nbsp; .xls &nbsp;·&nbsp; up to 10 MB</span>
+        <span class="upload-drop-filename mono" id="uploadFilename"></span>
+        <input type="file" name="dataset" id="datasetInput" accept=".csv,.xlsx,.xls" hidden>
+      </label>
+      <button type="submit" class="btn btn-primary upload-submit">Upload dataset</button>
+    </form>
+
+    {% if preview %}
+    <div class="loaded-panel">
+      <div class="loaded-header">
+        <span class="badge-loaded mono">Loaded</span>
+        <span class="loaded-name mono">{{ dataset_name }}</span>
+        <form action="{{ url_for('clear_dataset') }}" method="post" class="clear-form">
+          <button type="submit" class="btn btn-ghost btn-small">Remove file</button>
+        </form>
+      </div>
+
+      <div class="stat-row stat-row-compact">
+        <div class="stat-card">
+          <span class="stat-value mono">{{ preview.rows }}</span>
+          <span class="stat-label">Rows</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value mono">{{ preview.columns }}</span>
+          <span class="stat-label">Columns</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value mono">{{ preview.missing_total }}</span>
+          <span class="stat-label">Missing values</span>
+        </div>
+      </div>
+
+      <h3 class="panel-subhead">Columns &amp; types</h3>
+      <div class="ledger-table">
+        <div class="ledger-table-head">
+          <span>Column</span>
+          <span>dtype</span>
+        </div>
+        {% for col in preview.dtypes %}
+        <div class="ledger-table-row">
+          <span>{{ col.name }}</span>
+          <span class="mono">{{ col.dtype }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+      <h3 class="panel-subhead">Preview — first {{ preview.head|length }} rows</h3>
+      <div class="preview-scroll">
+        <table class="preview-table">
+          <thead>
+            <tr>{% for name in preview.column_names %}<th>{{ name }}</th>{% endfor %}</tr>
+          </thead>
+          <tbody>
+            {% for row in preview.head %}
+            <tr>{% for name in preview.column_names %}<td>{{ row[name] }}</td>{% endfor %}</tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <a class="btn btn-primary" href="{{ url_for('analyse_features') }}">Continue to Analyse Features →</a>
+    </div>
+    {% endif %}
+
+  </section>
+{% endblock %}

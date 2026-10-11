@@ -1,0 +1,3 @@
+Model,OOF ROC-AUC,OOF PR-AUC,OOF F1-Score (t=0.5),OOF Recall (t=0.5),OOF Precision (t=0.5),OOF Brier Score
+Baseline (Logistic Regression),0.8449 (±0.0151),0.6532 (±0.0305),0.6251 (±0.0103),0.8010 (±0.0180),0.5125 (±0.0076),0.1660
+Challenger (XGBoost Ensemble),0.8452 (±0.0120),0.6606 (±0.0263),0.6313 (±0.0167),0.7854 (±0.0168),0.5277 (±0.0176),0.1598

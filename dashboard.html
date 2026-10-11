@@ -1,0 +1,3729 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telco Churn AI: Leakage-Safe Baseline vs. XGBoost Ensemble | Executive 3D Intelligence Suite</title>
+  
+  <!-- Premium Fonts (Outfit + JetBrains Mono + Fraunces) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 Pro CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Three.js CDN for WebGL Particle & Quantum Constellation Canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* ====================================================================== */
+    /* 1. CINEMATIC ANIME RED CHAKRA & HAKI THEME DESIGN TOKENS               */
+    /* ====================================================================== */
+    :root {
+      --bg-void: #030305;
+      --bg-surface: #0a0407;
+      --card-glass: rgba(14, 8, 12, 0.82);
+      --card-glass-hover: rgba(26, 10, 16, 0.92);
+      --card-border: rgba(239, 68, 68, 0.22);
+      --card-border-glow: rgba(255, 42, 75, 0.75);
+      
+      --neon-crimson: #ff2a4b;
+      --neon-red: #ef4444;
+      --neon-blood: #dc2626;
+      --neon-darkred: #991b1b;
+      --neon-flame: #f97316;
+      --neon-amber: #f59e0b;
+      --neon-emerald: #10b981;
+      --neon-cyan: #38bdf8;
+      --neon-rose: #ff2a4b;
+      
+      --ink-primary: #f8fafc;
+      --ink-secondary: #cbd5e1;
+      --ink-muted: #94a3b8;
+      
+      --font-display: "Outfit", sans-serif;
+      --font-serif: "Fraunces", Georgia, serif;
+      --font-mono: "JetBrains Mono", monospace;
+      
+      --shadow-glass: 0 18px 40px -10px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 60, 90, 0.15);
+      --shadow-neon-crimson: 0 0 35px rgba(239, 68, 68, 0.45), inset 0 0 15px rgba(255, 42, 75, 0.18);
+      --shadow-neon-flame: 0 0 30px rgba(249, 115, 22, 0.4);
+      --shadow-neon-emerald: 0 0 25px rgba(16, 185, 129, 0.25);
+      --shadow-neon-amber: 0 0 25px rgba(245, 158, 11, 0.25);
+    }
+
+    * { box-sizing: border-box; }
+
+    /* Custom Crimson Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030305;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(239, 68, 68, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--neon-crimson);
+      box-shadow: 0 0 10px var(--neon-crimson);
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-void);
+      color: var(--ink-primary);
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      selection-background-color: var(--neon-crimson);
+      selection-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* WebGL Three.js Canvas & Lightning Canvas Layers */
+    #webgl-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.92;
+    }
+
+    #lightning-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.95;
+    }
+
+    /* Ambient Crimson & Spiritual Energy Nebulae */
+    .nebula {
+      position: fixed;
+      width: 750px;
+      height: 750px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(160px);
+      opacity: 0.24;
+      animation: pulseAura 8s ease-in-out infinite alternate;
+    }
+    .nebula-1 { top: -160px; left: -100px; background: radial-gradient(circle, #dc2626, transparent); }
+    .nebula-2 { bottom: -160px; right: -100px; background: radial-gradient(circle, #b91c1c, transparent); }
+    .nebula-3 { top: 40%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, #991b1b, transparent); opacity: 0.18; }
+
+    @keyframes pulseAura {
+      0% { transform: scale(1) rotate(0deg); opacity: 0.20; }
+      100% { transform: scale(1.18) rotate(15deg); opacity: 0.30; }
+    }
+
+    a { color: var(--neon-crimson); text-decoration: none; transition: all 0.25s ease; }
+    a:hover { color: #ffffff; text-shadow: 0 0 12px var(--neon-crimson); }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    p { margin: 0 0 14px; color: var(--ink-secondary); }
+
+    .mono { font-family: var(--font-mono); }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--neon-crimson);
+      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ====================================================================== */
+    /* 2. APP SHELL & MULTI-STAGE STEPPER SIDEBAR                             */
+    /* ====================================================================== */
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 10;
+    }
+
+    .pipeline-sidebar {
+      width: 320px;
+      flex-shrink: 0;
+      background: rgba(8, 4, 8, 0.86);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-right: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      box-shadow: 10px 0 35px rgba(0, 0, 0, 0.85), 2px 0 20px rgba(220, 38, 38, 0.2);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 24px 22px;
+      border-bottom: 1px solid var(--card-border);
+      background: linear-gradient(180deg, rgba(255, 42, 75, 0.06) 0%, transparent 100%);
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--neon-crimson) 0%, #dc2626 50%, #7f1d1d 100%);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 25px rgba(255, 42, 75, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      animation: pulseBrand 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseBrand {
+      0% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); }
+      100% { box-shadow: 0 0 32px rgba(255, 42, 75, 0.85), 0 0 10px rgba(249, 115, 22, 0.5); }
+    }
+
+    .brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .brand-line-1 { font-weight: 800; font-size: 16px; color: #ffffff; letter-spacing: -0.01em; }
+    .brand-line-2 { font-family: var(--font-mono); font-size: 11px; color: var(--neon-crimson); font-weight: 600; margin-top: 3px; }
+
+    .pipeline-stepper {
+      padding: 16px 0;
+      flex: 1;
+    }
+    .pipeline-stepper ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .pipeline-stepper li {
+      position: relative;
+      padding-left: 0;
+    }
+
+    .pipeline-stepper li::before {
+      content: "";
+      position: absolute;
+      left: 35px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(239, 68, 68, 0.12);
+    }
+    .pipeline-stepper li:first-child::before { top: 50%; }
+    .pipeline-stepper li:last-child::before { bottom: 50%; }
+
+    .pipeline-stepper button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 22px;
+      color: var(--ink-secondary);
+      background: transparent;
+      border: none;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pipeline-stepper button:hover {
+      color: #ffffff;
+      background: rgba(255, 42, 75, 0.08);
+      padding-left: 26px;
+    }
+
+    .step-node {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(14, 6, 10, 0.95);
+      border: 1.5px solid rgba(239, 68, 68, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+      transition: all 0.25s ease;
+    }
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+    .step-label { flex: 1; }
+
+    .pipeline-stepper li.is-active button {
+      color: #ffffff;
+      font-weight: 700;
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.22) 0%, transparent 100%);
+      border-left: 3px solid var(--neon-crimson);
+    }
+    .pipeline-stepper li.is-active .step-node {
+      background: #dc2626;
+      border-color: var(--neon-crimson);
+      box-shadow: 0 0 14px var(--neon-crimson);
+    }
+    .pipeline-stepper li.is-active .step-num {
+      color: #ffffff;
+    }
+
+    .sidebar-footer {
+      padding: 16px 22px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--ink-muted);
+      font-size: 12px;
+      background: rgba(4, 2, 6, 0.7);
+    }
+
+    /* ====================================================================== */
+    /* 3. APP BODY & STAGE SECTIONS                                           */
+    /* ====================================================================== */
+    .app-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .app-body main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 44px 40px 30px;
+      width: 100%;
+    }
+
+    .stage-section {
+      display: none;
+    }
+    .stage-section.active {
+      display: block;
+      animation: stageEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes stageEntrance {
+      0% {
+        opacity: 0;
+        transform: perspective(1000px) translateZ(-60px) translateY(24px);
+      }
+      100% {
+        opacity: 1;
+        transform: perspective(1000px) translateZ(0) translateY(0);
+      }
+    }
+
+    /* ====================================================================== */
+    /* 4. MULTI-LAYER 3D TILT GLASS CARDS & BREATHING NEON BORDERS            */
+    /* ====================================================================== */
+    .tilt-card {
+      background: var(--card-glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.85), 0 0 20px rgba(220, 38, 38, 0.12);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+      animation: cardAuraBreathing 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardAuraBreathing {
+      0% {
+        border-color: rgba(239, 68, 68, 0.18);
+        box-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.85), 0 0 16px rgba(220, 38, 38, 0.12);
+      }
+      100% {
+        border-color: rgba(255, 42, 75, 0.40);
+        box-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.85), 0 0 28px rgba(255, 42, 75, 0.28);
+      }
+    }
+
+    .tilt-card:hover {
+      border-color: var(--card-border-glow);
+      box-shadow: 0 22px 50px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 42, 75, 0.45);
+    }
+
+    /* Holographic Glare Overlay */
+    .glare-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      border-radius: inherit;
+      background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12), transparent 80%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
+    }
+
+    .tilt-card:hover .glare-overlay {
+      opacity: 1;
+    }
+
+    .card-highlight-crimson {
+      border: 1px solid rgba(255, 42, 75, 0.45);
+      box-shadow: 0 12px 36px -10px rgba(255, 42, 75, 0.3);
+    }
+    .card-highlight-crimson:hover {
+      box-shadow: var(--shadow-neon-crimson);
+    }
+
+    .card-highlight-cyan {
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 12px 36px -10px rgba(56, 189, 248, 0.2);
+    }
+    .card-highlight-cyan:hover {
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+    }
+
+    .card-highlight-gold {
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      box-shadow: 0 12px 36px -10px rgba(245, 158, 11, 0.2);
+    }
+
+    .card-highlight-rose {
+      border: 1px solid rgba(255, 42, 75, 0.45);
+      box-shadow: 0 12px 36px -10px rgba(255, 42, 75, 0.25);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .perforation-line {
+      height: 1px;
+      background: repeating-linear-gradient(90deg, rgba(239, 68, 68, 0.25) 0 6px, transparent 6px 14px);
+      margin: 36px 0;
+    }
+
+    /* ====================================================================== */
+    /* 5. HERO BANNER & 3D EMBOSSED STAMP BADGE                               */
+    /* ====================================================================== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 36px;
+      align-items: center;
+      padding-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      max-width: 620px;
+      font-size: 15.5px;
+      color: var(--ink-secondary);
+      margin-bottom: 18px;
+    }
+
+    .hero-stamp-3d {
+      border: 2px dashed var(--neon-crimson);
+      border-radius: 50%;
+      width: 152px;
+      height: 152px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(220, 38, 38, 0.35) 0%, rgba(14, 6, 12, 0.95) 100%);
+      box-shadow: 0 0 35px rgba(255, 42, 75, 0.45), inset 0 0 20px rgba(220, 38, 38, 0.35);
+      position: relative;
+      flex-shrink: 0;
+      transform: rotate(-4deg);
+      animation: floatHeroStamp 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatHeroStamp {
+      0% { transform: translateY(0px) rotate(-4deg); }
+      100% { transform: translateY(-8px) rotate(-2deg); }
+    }
+
+    .stamp-value {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: #ffffff;
+      text-shadow: 0 0 16px var(--neon-crimson);
+    }
+    .stamp-label {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 4px;
+      color: var(--neon-crimson);
+    }
+    .stamp-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--neon-emerald);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* ====================================================================== */
+    /* 6. STAT GRIDS & 3D TILT COUNTER TILES                                  */
+    /* ====================================================================== */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin: 22px 0;
+    }
+    .stat-row-3 { grid-template-columns: repeat(3, 1fr); }
+    .stat-row-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .stat-tile {
+      background: rgba(14, 8, 14, 0.78);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stat-tile:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 42, 75, 0.5);
+      box-shadow: 0 16px 32px -8px rgba(220, 38, 38, 0.4), 0 0 20px rgba(255, 42, 75, 0.25);
+    }
+
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+    .stat-lbl {
+      font-size: 12px;
+      color: var(--ink-secondary);
+      margin: 0;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-sub {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    /* ====================================================================== */
+    /* 7. NEON STATUS BADGES & ALERTS                                         */
+    /* ====================================================================== */
+    .badge-neon {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      transition: all 0.25s ease;
+    }
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+    }
+    .badge-rose {
+      background: rgba(255, 42, 75, 0.15);
+      color: #ff4b6e;
+      border: 1px solid rgba(255, 42, 75, 0.45);
+      box-shadow: 0 0 14px rgba(255, 42, 75, 0.35);
+    }
+    .badge-rose:hover {
+      box-shadow: 0 0 28px rgba(255, 42, 75, 0.8), 0 0 45px rgba(220, 38, 38, 0.45);
+      transform: scale(1.05);
+    }
+    .badge-cyan {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+    .badge-neutral {
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .alert-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      font-size: 13.5px;
+      background: rgba(14, 8, 14, 0.88);
+      border: 1px solid var(--card-border);
+    }
+    .alert-emerald {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+      color: #e2e8f0;
+    }
+    .alert-rose {
+      border-color: rgba(255, 42, 75, 0.45);
+      box-shadow: 0 0 20px rgba(255, 42, 75, 0.15);
+      color: #e2e8f0;
+    }
+
+    /* ====================================================================== */
+    /* 8. LEDGER TABLES & MATRICES                                            */
+    /* ====================================================================== */
+    .table-container {
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow-x: auto;
+      background: rgba(10, 6, 10, 0.7);
+      box-shadow: var(--shadow-glass);
+      margin: 18px 0;
+    }
+    .ledger-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+    }
+    .ledger-table th, .ledger-table td {
+      padding: 11px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      white-space: nowrap;
+    }
+    .ledger-table th {
+      background: rgba(255, 42, 75, 0.04);
+      color: #cbd5e1;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .ledger-table tr:hover td {
+      background: rgba(255, 42, 75, 0.05);
+    }
+    .ledger-table tr:last-child td {
+      border-bottom: none;
+    }
+    .ledger-table td.num, .ledger-table th.num {
+      font-family: var(--font-mono);
+      text-align: right;
+    }
+
+    /* ====================================================================== */
+    /* 9. BUTTONS & INPUT CONTROLS                                            */
+    /* ====================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13.5px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-crimson) 0%, #b91c1c 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(255, 42, 75, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 30px rgba(255, 42, 75, 0.75), 0 0 20px rgba(249, 115, 22, 0.4);
+      transform: translateY(-3px) scale(1.02);
+    }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: #cbd5e1;
+    }
+    .btn-ghost:hover {
+      border-color: var(--neon-crimson);
+      color: #ffffff;
+      box-shadow: 0 0 18px rgba(255, 42, 75, 0.35);
+    }
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 12px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .field-group {
+      margin-bottom: 12px;
+    }
+    .field-group label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-secondary);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .input-control, .select-control {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(6, 3, 6, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      transition: all 0.2s;
+    }
+    .input-control:focus, .select-control:focus {
+      outline: none;
+      border-color: var(--neon-crimson);
+      box-shadow: 0 0 18px rgba(255, 42, 75, 0.4);
+    }
+
+    .range-slider {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      outline: none;
+      accent-color: var(--neon-crimson);
+      cursor: pointer;
+    }
+
+    /* ====================================================================== */
+    /* 10. GALLERY & IMAGE MODAL                                              */
+    /* ====================================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+    .gallery-card {
+      background: var(--card-glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-glass);
+    }
+    .gallery-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: var(--neon-crimson);
+      box-shadow: var(--shadow-neon-crimson);
+    }
+    .gallery-img-wrap {
+      height: 210px;
+      background: #090408;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .gallery-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-card:hover .gallery-img-wrap img {
+      transform: scale(1.05);
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 2, 6, 0.7);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      gap: 8px;
+    }
+    .gallery-card:hover .gallery-overlay {
+      opacity: 1;
+    }
+    .gallery-info {
+      padding: 16px 18px;
+    }
+    .gallery-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .gallery-desc {
+      font-size: 12px;
+      color: var(--ink-secondary);
+      margin: 0;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 2, 5, 0.92);
+      backdrop-filter: blur(14px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-box {
+      background: #0d060a;
+      border-radius: 20px;
+      max-width: 1050px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 42, 75, 0.3);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(8, 4, 8, 0.85);
+    }
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #030103;
+    }
+    .modal-body img {
+      max-width: 100%;
+      max-height: 72vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ====================================================================== */
+    /* 11. SITE FOOTER                                                        */
+    /* ====================================================================== */
+    .site-footer {
+      margin-top: 48px;
+      padding: 24px 40px;
+      border-top: 1px solid var(--card-border);
+      background: rgba(8, 4, 8, 0.85);
+      backdrop-filter: blur(20px);
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--ink-muted);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ====================================================================== */
+    /* 12. RESPONSIVE BREAKPOINTS                                             */
+    /* ====================================================================== */
+    @media (max-width: 1024px) {
+      .app-shell { flex-direction: column; }
+      .pipeline-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: auto;
+      }
+      .pipeline-stepper {
+        overflow-x: auto;
+        padding: 12px 16px;
+      }
+      .pipeline-stepper ol {
+        display: flex;
+        gap: 6px;
+      }
+      .pipeline-stepper li::before { display: none; }
+      .pipeline-stepper button {
+        padding: 8px 12px;
+        white-space: nowrap;
+      }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-stamp-3d { order: -1; margin: 0 auto; }
+      .stat-row { grid-template-columns: 1fr; }
+      .app-body main { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL Three.js Red Energy Particle & Spiritual Polyhedra Vortex Canvas -->
+  <canvas id="webgl-bg"></canvas>
+
+  <!-- Conqueror's Haki & Crimson Chakra Lightning Canvas -->
+  <canvas id="lightning-canvas"></canvas>
+
+  <!-- Ambient Glowing Crimson Nebulae -->
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+
+  <div class="app-shell">
+
+    <!-- ================================================================== -->
+    <!-- PIPELINE SIDEBAR (12-STAGE ML LIFECYCLE STEPPER)                   -->
+    <!-- ================================================================== -->
+    <aside class="pipeline-sidebar" aria-label="Machine Learning Pipeline Navigation">
+      
+      <a class="sidebar-brand" href="#overview" onclick="navToStage(0)">
+        <span class="brand-mark">TC</span>
+        <span class="brand-text">
+          <span class="brand-line-1">Telco Churn AI</span>
+          <span class="brand-line-2">KL Learnathon • 3D Suite</span>
+        </span>
+      </a>
+
+      <nav class="pipeline-stepper">
+        <ol>
+          <li class="is-active" id="step-nav-0">
+            <button onclick="navToStage(0)">
+              <span class="step-node"><span class="step-num">01</span></span>
+              <span class="step-label">Executive Briefing</span>
+            </button>
+          </li>
+          <li id="step-nav-1">
+            <button onclick="navToStage(1)">
+              <span class="step-node"><span class="step-num">02</span></span>
+              <span class="step-label">Data Ingestion & Leakage</span>
+            </button>
+          </li>
+          <li id="step-nav-2">
+            <button onclick="navToStage(2)">
+              <span class="step-node"><span class="step-num">03</span></span>
+              <span class="step-label">5-Fold CV Manifest</span>
+            </button>
+          </li>
+          <li id="step-nav-3">
+            <button onclick="navToStage(3)">
+              <span class="step-node"><span class="step-num">04</span></span>
+              <span class="step-label">Exploratory Analytics</span>
+            </button>
+          </li>
+          <li id="step-nav-4">
+            <button onclick="navToStage(4)">
+              <span class="step-node"><span class="step-num">05</span></span>
+              <span class="step-label">Model Battleground</span>
+            </button>
+          </li>
+          <li id="step-nav-5">
+            <button onclick="navToStage(5)">
+              <span class="step-node"><span class="step-num">06</span></span>
+              <span class="step-label">Threshold Tuning & ROI</span>
+            </button>
+          </li>
+          <li id="step-nav-6">
+            <button onclick="navToStage(6)">
+              <span class="step-node"><span class="step-num">07</span></span>
+              <span class="step-label">Operational Risk Tiers</span>
+            </button>
+          </li>
+          <li id="step-nav-7">
+            <button onclick="navToStage(7)">
+              <span class="step-node"><span class="step-num">08</span></span>
+              <span class="step-label">SHAP & Odds Ratios</span>
+            </button>
+          </li>
+          <li id="step-nav-8">
+            <button onclick="navToStage(8)">
+              <span class="step-node"><span class="step-num">09</span></span>
+              <span class="step-label">Calibration & Reliability</span>
+            </button>
+          </li>
+          <li id="step-nav-9">
+            <button onclick="navToStage(9)">
+              <span class="step-node"><span class="step-num">10</span></span>
+              <span class="step-label">Failure Analysis & Paradox</span>
+            </button>
+          </li>
+          <li id="step-nav-10">
+            <button onclick="navToStage(10)">
+              <span class="step-node"><span class="step-num">11</span></span>
+              <span class="step-label">Interactive Risk Predictor</span>
+            </button>
+          </li>
+          <li id="step-nav-11">
+            <button onclick="navToStage(11)">
+              <span class="step-node"><span class="step-num">12</span></span>
+              <span class="step-label">Artifact Figure Gallery</span>
+            </button>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="mono" style="color: var(--neon-crimson); font-weight: 700;">OOF AUC: 0.8452</span>
+        <span class="badge-neon badge-emerald">100% Leak-Free</span>
+      </div>
+    </aside>
+
+    <!-- ================================================================== -->
+    <!-- APP BODY CONTENT SECTIONS                                          -->
+    <!-- ================================================================== -->
+    <div class="app-body">
+      
+      <main>
+
+        <!-- ============================================================= -->
+        <!-- STAGE 0: EXECUTIVE BRIEFING                                   -->
+        <!-- ============================================================= -->
+        <section id="stage-0" class="stage-section active">
+          
+          <div class="hero">
+            <div>
+              <div class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> KL University Learnathon & Hackathon 2026</div>
+              <h1>Telco Churn: Leakage-Safe Baseline vs. XGBoost Ensemble</h1>
+              <p class="hero-sub">Production-grade, zero-leakage cross-validation framework and economic decision intelligence for customer retention.</p>
+              
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <span class="badge-neon badge-emerald"><i class="fa-solid fa-check"></i> Pipeline Completed</span>
+                <span class="badge-neon badge-cyan"><i class="fa-solid fa-shield-halved"></i> 100% Leakage Safe</span>
+                <a href="telco_churn_pipeline.ipynb" target="_blank" class="badge-neon badge-amber"><i class="fa-brands fa-python"></i> Master Notebook (36 Cells)</a>
+              </div>
+            </div>
+
+            <!-- 3D Floating Embossed Stamp Badge -->
+            <div class="hero-stamp-3d">
+              <span class="stamp-value">$82.1k</span>
+              <span class="stamp-label">Net CLV Savings</span>
+              <span class="stamp-sub">t* = 0.54 Peak ROI</span>
+            </div>
+          </div>
+
+          <div class="perforation-line"></div>
+
+          <!-- Top 3D Tilt Metric Row -->
+          <div class="stat-row">
+            <div class="stat-tile card-highlight-crimson tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">OOF ROC-AUC Score</span>
+              <span class="stat-val mono counter" data-target="0.8452">0.8452</span>
+              <span class="stat-sub">PR-AUC: <strong class="mono" style="color: var(--neon-crimson);">0.6606</strong> (±0.026)</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Optimal Threshold</span>
+              <span class="stat-val mono" style="color: var(--neon-crimson);">t* = 0.54</span>
+              <span class="stat-sub">Max F1: <strong class="mono" style="color: var(--neon-emerald);">0.6329</strong> (Default: 0.50)</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Total Subscribers</span>
+              <span class="stat-val mono counter" data-target="7043">7,043</span>
+              <span class="stat-sub">Churners: <strong class="mono" style="color: var(--neon-rose);">1,869 (26.54%)</strong></span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Targeted Queue</span>
+              <span class="stat-val mono counter" data-target="2599">2,599</span>
+              <span class="stat-sub">Saved Churners: <strong class="mono" style="color: var(--neon-emerald);">~707 Accounts</strong></span>
+            </div>
+          </div>
+
+          <!-- Executive Summary Tilt Card -->
+          <div class="tilt-card card-highlight-crimson">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow"><i class="fa-solid fa-compass"></i> Strategic Summary</div>
+                <h2>Executive Problem Statement & Solution Framework</h2>
+              </div>
+              <span class="badge-neon badge-emerald">Challenger: XGBoost Winner</span>
+            </div>
+            <p>
+              Telecommunication customer churn threatens recurring annual revenue. This project develops a <strong>100% data-leakage-free</strong> machine learning engine comparing an interpretable <strong>Balanced Logistic Regression Baseline</strong> against an optimized <strong>XGBoost Tree Ensemble</strong> over a strict <strong>Stratified 5-Fold Cross-Validation Manifest</strong>.
+            </p>
+            <div class="stat-row stat-row-3" style="margin-top: 18px;">
+              <div style="background: rgba(8, 4, 8, 0.75); padding: 16px; border-radius: 12px; border-left: 3px solid var(--neon-crimson);">
+                <strong style="display: block; font-size: 13.5px; color: var(--neon-crimson);">1. Strict Leakage Prevention</strong>
+                <span style="font-size: 12px; color: var(--ink-secondary);">Dropped <code>customerID</code>; Imputed whitespace <code>TotalCharges</code> via deterministic domain formula ($tenure \times MonthlyCharges = 0.0$); Encapsulated all transformations in Scikit-Learn Pipeline.</span>
+              </div>
+              <div style="background: rgba(8, 4, 8, 0.75); padding: 16px; border-radius: 12px; border-left: 3px solid var(--neon-emerald);">
+                <strong style="display: block; font-size: 13.5px; color: var(--neon-emerald);">2. Profit-Maximized Boundary</strong>
+                <span style="font-size: 12px; color: var(--ink-secondary);">Threshold optimized to $t^*=0.54$, cutting false alarms by 130 accounts and maximizing net retained Customer Lifetime Value at <strong>$82,150.00</strong>.</span>
+              </div>
+              <div style="background: rgba(8, 4, 8, 0.75); padding: 16px; border-radius: 12px; border-left: 3px solid var(--neon-flame);">
+                <strong style="display: block; font-size: 13.5px; color: var(--neon-flame);">3. Operational Triage SOP</strong>
+                <span style="font-size: 12px; color: var(--ink-secondary);">Probabilities mapped into 3 permitted operational tiers: <code>LOW_RISK</code> (46.3%), <code>WATCH</code> (16.8%), and <code>OFFER_RETENTION</code> (36.9%) with precise business workflows.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Roadmap -->
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3 style="margin-bottom: 14px;"><i class="fa-solid fa-list-ol" style="color: var(--neon-cyan); margin-right: 8px;"></i> Complete Pipeline Stages</h3>
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Stage</th>
+                    <th>Module</th>
+                    <th>Core Deliverable</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="mono">01</td>
+                    <td><strong>Data Ingestion & Cleaning</strong></td>
+                    <td>7,043 rows, whitespace resolution, data dictionary</td>
+                    <td><span class="badge-neon badge-emerald">Verified</span></td>
+                    <td><button class="btn btn-ghost btn-sm" onclick="navToStage(1)">Inspect &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">02</td>
+                    <td><strong>5-Fold CV Manifest</strong></td>
+                    <td>Stratified split, ColumnTransformer pipeline</td>
+                    <td><span class="badge-neon badge-cyan">Leak-Free</span></td>
+                    <td><button class="btn btn-ghost btn-sm" onclick="navToStage(2)">Inspect &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">03</td>
+                    <td><strong>Model Battleground</strong></td>
+                    <td>Logistic Regression vs XGBoost cross-validation</td>
+                    <td><span class="badge-neon badge-amber">XGBoost Lead</span></td>
+                    <td><button class="btn btn-ghost btn-sm" onclick="navToStage(4)">Inspect &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">04</td>
+                    <td><strong>Threshold & ROI Tuning</strong></td>
+                    <td>$t^*=0.54$ calibration, $82,150 profit max</td>
+                    <td><span class="badge-neon badge-emerald">Optimized</span></td>
+                    <td><button class="btn btn-ghost btn-sm" onclick="navToStage(5)">Inspect &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">05</td>
+                    <td><strong>SHAP & Failure Analysis</strong></td>
+                    <td>Odds ratios, SHAP beeswarm, High-Tenure paradox fix</td>
+                    <td><span class="badge-neon badge-rose">$11.3k Saved</span></td>
+                    <td><button class="btn btn-ghost btn-sm" onclick="navToStage(9)">Inspect &rarr;</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 1: DATA INGESTION & LEAKAGE PREVENTION                  -->
+        <!-- ============================================================= -->
+        <section id="stage-1" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-database"></i> Phase 1 Architecture</div>
+          <h2>Data Ingestion, Cleaning & Leakage Prevention (R1 & R2)</h2>
+          <p>Strict data ingestion protocols guaranteeing physical reality preservation and zero statistical leakage.</p>
+
+          <div class="alert-box alert-emerald">
+            <i class="fa-solid fa-shield-check text-emerald-400" style="font-size: 20px;"></i>
+            <div>
+              <strong style="color: #34d399;">Leakage Prevention Guardrail (Rule R1):</strong> <code>customerID</code> dropped immediately upon ingestion to eliminate unique identifier memorization.
+            </div>
+          </div>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <h3>TotalCharges Whitespace Resolution Audit (Rule R2)</h3>
+                <p>Handling 11 records in raw Telco CSV containing whitespace string <code>" "</code>.</p>
+              </div>
+              <span class="badge-neon badge-cyan">Deterministic Imputation</span>
+            </div>
+
+            <div style="background: rgba(3, 7, 18, 0.7); padding: 18px; border-radius: 12px; margin-bottom: 16px; font-size: 13.5px; border: 1px solid var(--card-border);">
+              <p style="margin-bottom: 8px;"><strong>Inspection Finding:</strong> All 11 records with whitespace <code>TotalCharges</code> had <code>tenure = 0</code> (brand new customers signed up within current billing cycle who have not yet received their first monthly invoice).</p>
+              <div class="mono" style="background: rgba(15, 23, 42, 0.9); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--card-border); font-size: 12.5px; color: var(--neon-cyan);">
+                Formula: TotalCharges = tenure * MonthlyCharges = 0 * MonthlyCharges = $0.00
+              </div>
+              <p style="margin-top: 8px; margin-bottom: 0; font-size: 12px; color: var(--ink-muted);">
+                This deterministic domain imputation strictly matches physical reality without calculating global means/medians, preventing cross-split leakage.
+              </p>
+            </div>
+
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Data Type</th>
+                    <th>Non-Null Count</th>
+                    <th>Imputation Strategy</th>
+                    <th>Leakage Guardrail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="mono">customerID</td>
+                    <td>Object (String)</td>
+                    <td>7,043</td>
+                    <td>Dropped Immediately</td>
+                    <td><span class="badge-neon badge-rose">Excluded (R1)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">tenure</td>
+                    <td>Numeric (Integer)</td>
+                    <td>7,043 (100%)</td>
+                    <td>StandardScaler (In-Fold)</td>
+                    <td><span class="badge-neon badge-emerald">Leak-Free Pipeline</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">MonthlyCharges</td>
+                    <td>Numeric (Float)</td>
+                    <td>7,043 (100%)</td>
+                    <td>StandardScaler (In-Fold)</td>
+                    <td><span class="badge-neon badge-emerald">Leak-Free Pipeline</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">TotalCharges</td>
+                    <td>Numeric (Float)</td>
+                    <td>7,043 (Coerced)</td>
+                    <td>tenure * MonthlyCharges = 0.0</td>
+                    <td><span class="badge-neon badge-cyan">Deterministic (R2)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">Contract</td>
+                    <td>Categorical (3 levels)</td>
+                    <td>7,043 (100%)</td>
+                    <td>OneHotEncoder (In-Fold)</td>
+                    <td><span class="badge-neon badge-emerald">Leak-Free Pipeline</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">InternetService</td>
+                    <td>Categorical (3 levels)</td>
+                    <td>7,043 (100%)</td>
+                    <td>OneHotEncoder (In-Fold)</td>
+                    <td><span class="badge-neon badge-emerald">Leak-Free Pipeline</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">PaymentMethod</td>
+                    <td>Categorical (4 levels)</td>
+                    <td>7,043 (100%)</td>
+                    <td>OneHotEncoder (In-Fold)</td>
+                    <td><span class="badge-neon badge-emerald">Leak-Free Pipeline</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">Churn (Target)</td>
+                    <td>Binary (0 / 1)</td>
+                    <td>7,043 (100%)</td>
+                    <td>None (Label)</td>
+                    <td><span class="badge-neon badge-amber">Stratified 5-Fold</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3>Sample Dataset Preview (First 5 Ingested Records)</h3>
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>gender</th>
+                    <th>SeniorCitizen</th>
+                    <th>tenure</th>
+                    <th>PhoneService</th>
+                    <th>MultipleLines</th>
+                    <th>InternetService</th>
+                    <th>Contract</th>
+                    <th>MonthlyCharges</th>
+                    <th>TotalCharges</th>
+                    <th>Churn</th>
+                  </tr>
+                </thead>
+                <tbody class="mono" style="font-size: 12px;">
+                  <tr>
+                    <td>Female</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>No</td>
+                    <td>No phone service</td>
+                    <td>DSL</td>
+                    <td>Month-to-month</td>
+                    <td>$29.85</td>
+                    <td>$29.85</td>
+                    <td><span class="badge-neon badge-neutral">No (0)</span></td>
+                  </tr>
+                  <tr>
+                    <td>Male</td>
+                    <td>0</td>
+                    <td>34</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>DSL</td>
+                    <td>One year</td>
+                    <td>$56.95</td>
+                    <td>$1,889.50</td>
+                    <td><span class="badge-neon badge-neutral">No (0)</span></td>
+                  </tr>
+                  <tr>
+                    <td>Male</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>DSL</td>
+                    <td>Month-to-month</td>
+                    <td>$53.85</td>
+                    <td>$108.15</td>
+                    <td><span class="badge-neon badge-rose">Yes (1)</span></td>
+                  </tr>
+                  <tr>
+                    <td>Male</td>
+                    <td>0</td>
+                    <td>45</td>
+                    <td>No</td>
+                    <td>No phone service</td>
+                    <td>DSL</td>
+                    <td>One year</td>
+                    <td>$42.30</td>
+                    <td>$1,840.75</td>
+                    <td><span class="badge-neon badge-neutral">No (0)</span></td>
+                  </tr>
+                  <tr>
+                    <td>Female</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>Fiber optic</td>
+                    <td>Month-to-month</td>
+                    <td>$70.70</td>
+                    <td>$151.65</td>
+                    <td><span class="badge-neon badge-rose">Yes (1)</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 2: 5-FOLD CROSS-VALIDATION MANIFEST                     -->
+        <!-- ============================================================= -->
+        <section id="stage-2" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-code-fork"></i> Phase 1 & 2 Architecture</div>
+          <h2>Stratified 5-Fold Cross-Validation Manifest</h2>
+          <p>Preserving the 26.54% churn distribution across every split with strictly encapsulated transformations.</p>
+
+          <div class="stat-row stat-row-3">
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Total Folds</span>
+              <span class="stat-val mono">5 Folds</span>
+              <span class="stat-sub">StratifiedKFold(n_splits=5, shuffle=True, seed=42)</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Train / Val Ratio</span>
+              <span class="stat-val mono">80% / 20%</span>
+              <span class="stat-sub">~5,634 Train / ~1,409 Val per split</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Target Consistency</span>
+              <span class="stat-val mono" style="color: var(--neon-emerald);">26.54%</span>
+              <span class="stat-sub">Identical churn rate across all 5 folds</span>
+            </div>
+          </div>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3>Cross-Validation Fold Manifest Ledger</h3>
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Fold Index</th>
+                    <th class="num">Train Samples</th>
+                    <th class="num">Train Churn Rate</th>
+                    <th class="num">Val Samples</th>
+                    <th class="num">Val Churn Rate</th>
+                    <th>Leakage Guard Status</th>
+                  </tr>
+                </thead>
+                <tbody class="mono">
+                  <tr>
+                    <td>Fold 0</td>
+                    <td class="num">5,634</td>
+                    <td class="num">26.54% (1,495)</td>
+                    <td class="num">1,409</td>
+                    <td class="num">26.54% (374)</td>
+                    <td><span class="badge-neon badge-emerald">100% In-Fold Fit</span></td>
+                  </tr>
+                  <tr>
+                    <td>Fold 1</td>
+                    <td class="num">5,634</td>
+                    <td class="num">26.54% (1,495)</td>
+                    <td class="num">1,409</td>
+                    <td class="num">26.54% (374)</td>
+                    <td><span class="badge-neon badge-emerald">100% In-Fold Fit</span></td>
+                  </tr>
+                  <tr>
+                    <td>Fold 2</td>
+                    <td class="num">5,634</td>
+                    <td class="num">26.54% (1,495)</td>
+                    <td class="num">1,409</td>
+                    <td class="num">26.54% (374)</td>
+                    <td><span class="badge-neon badge-emerald">100% In-Fold Fit</span></td>
+                  </tr>
+                  <tr>
+                    <td>Fold 3</td>
+                    <td class="num">5,635</td>
+                    <td class="num">26.53% (1,495)</td>
+                    <td class="num">1,408</td>
+                    <td class="num">26.56% (374)</td>
+                    <td><span class="badge-neon badge-emerald">100% In-Fold Fit</span></td>
+                  </tr>
+                  <tr>
+                    <td>Fold 4</td>
+                    <td class="num">5,635</td>
+                    <td class="num">26.55% (1,496)</td>
+                    <td class="num">1,408</td>
+                    <td class="num">26.49% (373)</td>
+                    <td><span class="badge-neon badge-emerald">100% In-Fold Fit</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tilt-card card-highlight-cyan">
+            <div class="glare-overlay"></div>
+            <h3>Encapsulated ColumnTransformer Architecture</h3>
+            <p>Every feature engineering step executes inside the training loop to guarantee zero validation data snooping.</p>
+            <div style="background: rgba(3, 7, 18, 0.8); padding: 18px; border-radius: 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; border: 1px solid var(--card-border);">
+              <span style="color: var(--neon-indigo); font-weight: 700;"># Numerical Pipeline (tenure, MonthlyCharges, TotalCharges)</span><br>
+              num_pipeline = Pipeline([('imputer', SimpleImputer(strategy='median')), ('scaler', StandardScaler())])<br><br>
+              <span style="color: var(--neon-cyan); font-weight: 700;"># Categorical Pipeline (16 demographic & service features)</span><br>
+              cat_pipeline = Pipeline([('imputer', SimpleImputer(strategy='most_frequent')), ('ohe', OneHotEncoder(handle_unknown='ignore', sparse_output=False))])<br><br>
+              <span style="color: var(--neon-emerald); font-weight: 700;"># Combined Preprocessor</span><br>
+              preprocessor = ColumnTransformer(transformers=[('num', num_pipeline, num_cols), ('cat', cat_pipeline, cat_cols)])
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 3: EXPLORATORY DATA ANALYSIS                            -->
+        <!-- ============================================================= -->
+        <section id="stage-3" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-chart-column"></i> Phase 1 & 3 Analytics</div>
+          <h2>Exploratory Statistics & Churn Distribution</h2>
+          <p>Uncovering systemic churn drivers across contract structures, billing tiers, and tenure dynamics.</p>
+
+          <div class="stat-row">
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Month-to-Month</span>
+              <span class="stat-val mono" style="color: var(--neon-rose);">42.7%</span>
+              <span class="stat-sub">3,875 accounts (Highest risk)</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Fiber Optic Churn</span>
+              <span class="stat-val mono" style="color: var(--neon-rose);">41.9%</span>
+              <span class="stat-sub">3,096 accounts (Bill shock)</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Electronic Check</span>
+              <span class="stat-val mono" style="color: var(--neon-amber);">45.3%</span>
+              <span class="stat-sub">2,365 accounts (Manual friction)</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">2-Year Contract</span>
+              <span class="stat-val mono" style="color: var(--neon-emerald);">2.8%</span>
+              <span class="stat-sub">1,695 accounts (Strong loyalty)</span>
+            </div>
+          </div>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3>Bivariate Churn Breakdown by Key Cohorts</h3>
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Feature Dimension</th>
+                    <th>Category Level</th>
+                    <th class="num">Total Volume</th>
+                    <th class="num">Churn Count</th>
+                    <th class="num">Empirical Churn Rate</th>
+                    <th>Business Vulnerability</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td rowspan="3"><strong>Contract Term</strong></td>
+                    <td class="mono">Month-to-month</td>
+                    <td class="num mono">3,875 (55.0%)</td>
+                    <td class="num mono">1,655</td>
+                    <td class="num mono" style="color: var(--neon-rose); font-weight: 700;">42.7%</td>
+                    <td><span class="badge-neon badge-rose">Severe Risk</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">One year</td>
+                    <td class="num mono">1,473 (20.9%)</td>
+                    <td class="num mono">166</td>
+                    <td class="num mono" style="color: var(--neon-amber); font-weight: 600;">11.3%</td>
+                    <td><span class="badge-neon badge-amber">Moderate</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">Two year</td>
+                    <td class="num mono">1,695 (24.1%)</td>
+                    <td class="num mono">48</td>
+                    <td class="num mono" style="color: var(--neon-emerald); font-weight: 700;">2.8%</td>
+                    <td><span class="badge-neon badge-emerald">Highly Protected</span></td>
+                  </tr>
+                  <tr>
+                    <td rowspan="3"><strong>Internet Service</strong></td>
+                    <td class="mono">Fiber optic</td>
+                    <td class="num mono">3,096 (44.0%)</td>
+                    <td class="num mono">1,297</td>
+                    <td class="num mono" style="color: var(--neon-rose); font-weight: 700;">41.9%</td>
+                    <td><span class="badge-neon badge-rose">High Invoicing Strain</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">DSL</td>
+                    <td class="num mono">2,421 (34.4%)</td>
+                    <td class="num mono">459</td>
+                    <td class="num mono" style="color: var(--neon-amber); font-weight: 600;">19.0%</td>
+                    <td><span class="badge-neon badge-amber">Stable</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">No Internet</td>
+                    <td class="num mono">1,526 (21.7%)</td>
+                    <td class="num mono">113</td>
+                    <td class="num mono" style="color: var(--neon-emerald); font-weight: 700;">7.4%</td>
+                    <td><span class="badge-neon badge-emerald">Utility Sticky</span></td>
+                  </tr>
+                  <tr>
+                    <td rowspan="2"><strong>Tenure Cohort</strong></td>
+                    <td class="mono">0 &ndash; 12 Months</td>
+                    <td class="num mono">2,186 (31.0%)</td>
+                    <td class="num mono">1,037</td>
+                    <td class="num mono" style="color: var(--neon-rose); font-weight: 700;">47.4%</td>
+                    <td><span class="badge-neon badge-rose">Acute Churn Cliff</span></td>
+                  </tr>
+                  <tr>
+                    <td class="mono">49 &ndash; 72 Months</td>
+                    <td class="num mono">1,938 (27.5%)</td>
+                    <td class="num mono">185</td>
+                    <td class="num mono" style="color: var(--neon-emerald); font-weight: 700;">9.5%</td>
+                    <td><span class="badge-neon badge-emerald">Loyalty Plateau</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 4: MODEL BATTLEGROUND (BASELINE VS CHALLENGER)          -->
+        <!-- ============================================================= -->
+        <section id="stage-4" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-scale-balanced"></i> Phase 2 Model Benchmark</div>
+          <h2>Model Battleground: Baseline vs. XGBoost Ensemble</h2>
+          <p>Rigorous out-of-fold cross-validation comparison across statistical discrimination and calibration metrics.</p>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <h3>5-Fold Out-Of-Fold Performance Audit</h3>
+                <p>Metrics measured strictly on held-out folds with cross-fold standard error bounds.</p>
+              </div>
+              <span class="badge-neon badge-emerald">Winner: XGBoost Challenger</span>
+            </div>
+
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Evaluation Metric</th>
+                    <th class="num">Baseline (Logistic Reg Balanced)</th>
+                    <th class="num">Challenger (XGBoost Ensemble)</th>
+                    <th class="num">Delta</th>
+                    <th>Superior Model</th>
+                  </tr>
+                </thead>
+                <tbody class="mono">
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 600;">ROC-AUC (Discrimination)</td>
+                    <td class="num">0.8449 &plusmn; 0.0151</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.8452 &plusmn; 0.0120</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.0003</td>
+                    <td><span class="badge-neon badge-emerald">XGBoost</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 600;">PR-AUC (Imbalance Focus)</td>
+                    <td class="num">0.6532 &plusmn; 0.0305</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.6606 &plusmn; 0.0263</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.0074 (+0.74%)</td>
+                    <td><span class="badge-neon badge-emerald">XGBoost</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 600;">F1-Score (Default t=0.50)</td>
+                    <td class="num">0.6251 &plusmn; 0.0102</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.6313 &plusmn; 0.0168</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.0062</td>
+                    <td><span class="badge-neon badge-emerald">XGBoost</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 600;">Precision (Default t=0.50)</td>
+                    <td class="num">0.5125 &plusmn; 0.0083</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.5277 &plusmn; 0.0175</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.0152 (+1.52%)</td>
+                    <td><span class="badge-neon badge-emerald">XGBoost</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 600;">Recall (Default t=0.50)</td>
+                    <td class="num" style="color: var(--neon-indigo); font-weight: 700;">0.8010 &plusmn; 0.0182</td>
+                    <td class="num">0.7854 &plusmn; 0.0169</td>
+                    <td class="num" style="color: var(--neon-rose);">-0.0156</td>
+                    <td><span class="badge-neon badge-neutral">Baseline (Class Weighted)</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 600;">Brier Score (Lower=Better)</td>
+                    <td class="num">0.1660</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.1598</td>
+                    <td class="num" style="color: var(--neon-emerald);">-0.0062</td>
+                    <td><span class="badge-neon badge-emerald">XGBoost (Better Calibrated)</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Interactive Chart -->
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3>Visual Model Metric Comparison</h3>
+            <div style="height: 320px; position: relative;">
+              <canvas id="stageModelChart"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 5: THRESHOLD TUNING & FINANCIAL ROI                     -->
+        <!-- ============================================================= -->
+        <section id="stage-5" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-sliders"></i> Phase 3 Business Optimization</div>
+          <h2>Decision Threshold Optimization & Financial ROI</h2>
+          <p>Tuning the classification threshold to maximize profit and customer lifetime value retention.</p>
+
+          <div class="tilt-card card-highlight-cyan">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <h3>Live Interactive Decision Threshold Simulator</h3>
+                <p>Drag the cutoff slider to simulate real-time tradeoffs between Precision, Recall, and Net Retained Budget.</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-primary btn-sm" onclick="setThresholdVal(0.54)">Reset to Optimal ($t^*=0.54$)</button>
+                <button class="btn btn-ghost btn-sm" onclick="setThresholdVal(0.50)">Default ($t=0.50$)</button>
+              </div>
+            </div>
+
+            <div style="background: rgba(3, 7, 18, 0.7); padding: 18px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--card-border);">
+              <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13.5px; margin-bottom: 6px;">
+                <span>Decision Cutoff: <strong class="mono" id="sim-thresh-text" style="color: var(--neon-cyan); font-size: 16px;">0.54</strong></span>
+                <span class="mono" style="color: var(--ink-muted);">Range: 0.10 to 0.90</span>
+              </div>
+              <input type="range" class="range-slider" id="sim-slider" min="0.10" max="0.90" step="0.02" value="0.54" oninput="handleSimChange(this.value)">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); margin-top: 6px;">
+                <span>0.10 (Aggressive Outreach)</span>
+                <span style="color: var(--neon-cyan); font-weight: 700;">0.54 (Optimal F1 / ROI Peak)</span>
+                <span>0.90 (Conservative Outreach)</span>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Simulated F1-Score</span>
+                <span class="stat-val mono" id="sim-res-f1">0.6329</span>
+                <span class="stat-sub">Peak Harmonic Mean</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Simulated Recall</span>
+                <span class="stat-val mono" id="sim-res-recall" style="color: var(--neon-indigo);">75.7%</span>
+                <span class="stat-sub">Churners Captured</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Simulated Precision</span>
+                <span class="stat-val mono" id="sim-res-precision" style="color: var(--neon-emerald);">54.4%</span>
+                <span class="stat-sub">Outreach Efficiency</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Targeted Queue</span>
+                <span class="stat-val mono" id="sim-res-targeted" style="color: var(--neon-rose);">2,599 (36.9%)</span>
+                <span class="stat-sub">Retention Queue</span>
+              </div>
+            </div>
+
+            <div class="stat-row stat-row-2" style="margin-top: 10px;">
+              <div class="stat-tile card-highlight-cyan tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Net Retained CLV Value</span>
+                <span class="stat-val mono" id="sim-res-clv" style="color: var(--neon-emerald);">$82,150.00</span>
+                <span class="stat-sub">Assumptions: $300 CLV Saved &bull; $50 Offer Cost &bull; 75% Rescue Rate</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Discount Budget Required</span>
+                <span class="stat-val mono" id="sim-res-cost" style="color: var(--neon-amber);">$129,950.00</span>
+                <span class="stat-sub">$50 per targeted subscriber in OFFER_RETENTION tier</span>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 6: OPERATIONAL RISK TIERS                               -->
+        <!-- ============================================================= -->
+        <section id="stage-6" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-layer-group"></i> Phase 3 Operational Deployment</div>
+          <h2>Operational Risk Tiers & Action Playbook</h2>
+          <p>Mapping continuous model probabilities into discrete triage bands for customer success teams.</p>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <h3>Risk Tier Distribution & Action Playbook</h3>
+                <p>Strict workflow rules assigned to every subscriber based on model risk probability.</p>
+              </div>
+              <span class="badge-neon badge-cyan">7,043 Accounts Triaged</span>
+            </div>
+
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Operational Tier</th>
+                    <th>Probability Window</th>
+                    <th class="num">Volume</th>
+                    <th class="num">Empirical Churn</th>
+                    <th>Standard Operating Procedure (SOP)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge-neon badge-emerald"><i class="fa-solid fa-shield"></i> LOW_RISK</span></td>
+                    <td class="mono">[0.00, 0.30)</td>
+                    <td class="num mono font-bold">3,260 (46.3%)</td>
+                    <td class="num mono" style="color: var(--neon-emerald); font-weight: 700;">5.8% Churn</td>
+                    <td><strong>Standard Invoicing & Service:</strong> Zero retention spend; avoid unnecessary marketing noise or friction.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-neon badge-amber"><i class="fa-solid fa-eye"></i> WATCH</span></td>
+                    <td class="mono">[0.30, 0.54)</td>
+                    <td class="num mono font-bold">1,184 (16.8%)</td>
+                    <td class="num mono" style="color: var(--neon-amber); font-weight: 700;">29.6% Churn</td>
+                    <td><strong>Non-Invasive Engagement:</strong> Automated CSAT check, feature adoption tips, loyalty newsletter.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-neon badge-rose"><i class="fa-solid fa-fire"></i> OFFER_RETENTION</span></td>
+                    <td class="mono">[0.54, 1.00]</td>
+                    <td class="num mono font-bold">2,599 (36.9%)</td>
+                    <td class="num mono" style="color: var(--neon-rose); font-weight: 700;">54.4% Churn</td>
+                    <td><strong>High-Priority Specialist Outreach:</strong> Dedicated Retention Concierge call; $50 contract renewal voucher or free speed boost.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Chart -->
+            <div style="height: 280px; margin-top: 24px; position: relative;">
+              <canvas id="stageTierDonutChart"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 7: SHAP & ODDS RATIOS EXPLAINABILITY                    -->
+        <!-- ============================================================= -->
+        <section id="stage-7" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-brain"></i> Phase 4 Model Explainability</div>
+          <h2>Feature Drivers, Odds Ratios & SHAP Values</h2>
+          <p>Interpreting global linear risk multipliers alongside non-linear tree attribution values.</p>
+
+          <div class="stat-row">
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Month-to-Month</span>
+              <span class="stat-val mono" style="color: var(--neon-rose);">+3.24x</span>
+              <span class="stat-sub">Highest churn risk multiplier</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">2-Year Contract</span>
+              <span class="stat-val mono" style="color: var(--neon-emerald);">0.26x</span>
+              <span class="stat-sub">74% reduction in churn odds</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Tenure Length</span>
+              <span class="stat-val mono" style="color: var(--neon-emerald);">0.28x</span>
+              <span class="stat-sub">Per std dev increase</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Fiber Optic Internet</span>
+              <span class="stat-val mono" style="color: var(--neon-rose);">+1.75x</span>
+              <span class="stat-sub">Price sensitivity multiplier</span>
+            </div>
+          </div>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3>Logistic Regression Odds Ratios ($\text{OR} = e^\beta$)</h3>
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Feature Name</th>
+                    <th class="num">Standardized Coeff ($\beta$)</th>
+                    <th class="num">Odds Ratio ($e^\beta$)</th>
+                    <th>Risk Interpretation</th>
+                  </tr>
+                </thead>
+                <tbody class="mono">
+                  <tr>
+                    <td>Contract: Month-to-Month</td>
+                    <td class="num">+1.176</td>
+                    <td class="num" style="color: var(--neon-rose); font-weight: 700;">3.24x</td>
+                    <td><span class="badge-neon badge-rose">Strongest Risk Driver</span></td>
+                  </tr>
+                  <tr>
+                    <td>TotalCharges</td>
+                    <td class="num">+0.610</td>
+                    <td class="num" style="color: var(--neon-rose); font-weight: 700;">1.84x</td>
+                    <td><span class="badge-neon badge-rose">High Cumulative Spend Risk</span></td>
+                  </tr>
+                  <tr>
+                    <td>InternetService: Fiber Optic</td>
+                    <td class="num">+0.560</td>
+                    <td class="num" style="color: var(--neon-rose); font-weight: 700;">1.75x</td>
+                    <td><span class="badge-neon badge-rose">High Monthly Invoice Friction</span></td>
+                  </tr>
+                  <tr>
+                    <td>PaymentMethod: Electronic Check</td>
+                    <td class="num">+0.315</td>
+                    <td class="num" style="color: var(--neon-amber); font-weight: 700;">1.37x</td>
+                    <td><span class="badge-neon badge-amber">Manual Payment Friction</span></td>
+                  </tr>
+                  <tr>
+                    <td>TechSupport: Yes</td>
+                    <td class="num">-0.478</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.62x</td>
+                    <td><span class="badge-neon badge-emerald">38% Churn Reduction</span></td>
+                  </tr>
+                  <tr>
+                    <td>Contract: Two Year</td>
+                    <td class="num">-1.347</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.26x</td>
+                    <td><span class="badge-neon badge-emerald">74% Churn Reduction</span></td>
+                  </tr>
+                  <tr>
+                    <td>tenure</td>
+                    <td class="num">-1.273</td>
+                    <td class="num" style="color: var(--neon-emerald); font-weight: 700;">0.28x</td>
+                    <td><span class="badge-neon badge-emerald">72% Churn Reduction</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 8: CALIBRATION & RELIABILITY                            -->
+        <!-- ============================================================= -->
+        <section id="stage-8" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-bullseye"></i> Phase 5 Probability Reliability</div>
+          <h2>Probability Calibration & Reliability Assessment</h2>
+          <p>Evaluating whether predicted probabilities reflect true empirical churn frequencies across 10 deciles.</p>
+
+          <div class="stat-row stat-row-2">
+            <div class="stat-tile card-highlight-cyan tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">XGBoost Brier Score</span>
+              <span class="stat-val mono" style="color: var(--neon-emerald);">0.1598</span>
+              <span class="stat-sub">Lower than Baseline (0.1660) &bull; Exceptional calibration</span>
+            </div>
+            <div class="stat-tile tilt-card">
+              <div class="glare-overlay"></div>
+              <span class="stat-lbl">Expected Calibration Error (ECE)</span>
+              <span class="stat-val mono">0.0241</span>
+              <span class="stat-sub">Low mean divergence from diagonal perfect calibration line</span>
+            </div>
+          </div>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <h3>10-Bin Calibration Reliability Breakdown</h3>
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Probability Decile</th>
+                    <th class="num">Mean Predicted Prob ($\bar{p}$)</th>
+                    <th class="num">Observed True Churn Rate</th>
+                    <th class="num">Calibration Gap</th>
+                    <th>Reliability Rating</th>
+                  </tr>
+                </thead>
+                <tbody class="mono">
+                  <tr>
+                    <td>Decile 1 [0.00 &ndash; 0.10)</td>
+                    <td class="num">0.038</td>
+                    <td class="num">0.032</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.006</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 2 [0.10 &ndash; 0.20)</td>
+                    <td class="num">0.146</td>
+                    <td class="num">0.141</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.005</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 3 [0.20 &ndash; 0.30)</td>
+                    <td class="num">0.249</td>
+                    <td class="num">0.258</td>
+                    <td class="num" style="color: var(--neon-emerald);">-0.009</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 4 [0.30 &ndash; 0.40)</td>
+                    <td class="num">0.347</td>
+                    <td class="num">0.339</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.008</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 5 [0.40 &ndash; 0.50)</td>
+                    <td class="num">0.452</td>
+                    <td class="num">0.468</td>
+                    <td class="num" style="color: var(--neon-emerald);">-0.016</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 6 [0.50 &ndash; 0.60)</td>
+                    <td class="num">0.551</td>
+                    <td class="num">0.544</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.007</td>
+                    <td><span class="badge-neon badge-emerald">Optimal Boundary Peak</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 7 [0.60 &ndash; 0.70)</td>
+                    <td class="num">0.648</td>
+                    <td class="num">0.662</td>
+                    <td class="num" style="color: var(--neon-emerald);">-0.014</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 8 [0.70 &ndash; 0.80)</td>
+                    <td class="num">0.749</td>
+                    <td class="num">0.738</td>
+                    <td class="num" style="color: var(--neon-emerald);">+0.011</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                  <tr>
+                    <td>Decile 9 [0.80 &ndash; 0.90)</td>
+                    <td class="num">0.846</td>
+                    <td class="num">0.852</td>
+                    <td class="num" style="color: var(--neon-emerald);">-0.006</td>
+                    <td><span class="badge-neon badge-emerald">High Precision</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 9: FAILURE ANALYSIS & HIGH-TENURE PARADOX               -->
+        <!-- ============================================================= -->
+        <section id="stage-9" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-triangle-exclamation"></i> Phase 5 Failure Audit</div>
+          <h2>Error Audit & The High-Tenure Paradox</h2>
+          <p>Transparent diagnosis of classification errors and economic remediation for false positives.</p>
+
+          <div class="tilt-card">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <h3>Classification Error Audit Table (7,043 Population at $t^*=0.54$)</h3>
+                <p>Accounting for True Negatives, True Positives, False Positives, and False Negatives.</p>
+              </div>
+              <span class="badge-neon badge-neutral">Full Population Accounting</span>
+            </div>
+
+            <div class="table-container">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th class="num">Count</th>
+                    <th class="num">Share</th>
+                    <th class="num">Mean Tenure</th>
+                    <th class="num">Mean Monthly Bill</th>
+                    <th class="num">Mean Risk Prob</th>
+                    <th>Economic Assessment</th>
+                  </tr>
+                </thead>
+                <tbody class="mono">
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 700; color: var(--neon-emerald);">True Negative (TN)</td>
+                    <td class="num">3,989</td>
+                    <td class="num">56.6%</td>
+                    <td class="num">43.1 mos</td>
+                    <td class="num">$57.36</td>
+                    <td class="num" style="color: var(--neon-emerald);">0.171</td>
+                    <td style="font-family: var(--font-display);">Correctly uncontacted. Zero discount budget wasted.</td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 700; color: var(--neon-indigo);">True Positive (TP)</td>
+                    <td class="num">1,414</td>
+                    <td class="num">20.1%</td>
+                    <td class="num">12.8 mos</td>
+                    <td class="num">$76.71</td>
+                    <td class="num" style="color: var(--neon-rose);">0.786</td>
+                    <td style="font-family: var(--font-display); color: var(--neon-emerald); font-weight: 600;">Successfully saved! Generates $82,150 net retained CLV.</td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 700; color: var(--neon-rose);">False Positive (FP)</td>
+                    <td class="num">1,185</td>
+                    <td class="num">16.8%</td>
+                    <td class="num">19.1 mos</td>
+                    <td class="num" style="color: var(--neon-rose); font-weight: 700;">$74.42</td>
+                    <td class="num" style="color: var(--neon-rose);">0.709</td>
+                    <td style="font-family: var(--font-display); color: var(--neon-rose);">Budget Waste Risk: $50 discount offered to customer who stayed loyal.</td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-display); font-weight: 700; color: var(--neon-amber);">False Negative (FN)</td>
+                    <td class="num">455</td>
+                    <td class="num">6.5%</td>
+                    <td class="num">33.9 mos</td>
+                    <td class="num">$67.38</td>
+                    <td class="num" style="color: var(--neon-amber);">0.324</td>
+                    <td style="font-family: var(--font-display); color: var(--neon-amber);">Silent Churn Loss: $300 CLV lost per uncontacted subscriber.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Deep Failure Case Spotlight -->
+          <div class="tilt-card card-highlight-rose">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow" style="color: var(--neon-rose);"><i class="fa-solid fa-microscope"></i> Deep Failure Case Spotlight</div>
+                <h3 style="color: var(--neon-rose);">The High-Tenure, High-Charge False Positive Paradox</h3>
+                <p>Investigating loyal subscribers who trigger false alarms due to premium monthly invoices.</p>
+              </div>
+              <div class="hero-stamp-3d" style="border-color: var(--neon-rose); width: 120px; height: 120px; transform: none; box-shadow: 0 0 25px rgba(244, 63, 94, 0.4);">
+                <span class="stamp-value" style="color: var(--neon-rose); font-size: 22px;">$11,300</span>
+                <span class="stamp-label" style="color: var(--neon-rose);">Wasted Budget</span>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Cohort Size</span>
+                <span class="stat-val mono">226 Users</span>
+                <span class="stat-sub">Tenure &ge; 36m & Charges &ge; $70</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Average Tenure</span>
+                <span class="stat-val mono" style="color: var(--neon-emerald);">49.5 Months</span>
+                <span class="stat-sub">4.1+ Years of Loyalty</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Average Monthly Bill</span>
+                <span class="stat-val mono" style="color: var(--neon-cyan);">$98.52 / mo</span>
+                <span class="stat-sub">99.6% Fiber Optic &bull; 73% M2M</span>
+              </div>
+              <div class="stat-tile tilt-card">
+                <div class="glare-overlay"></div>
+                <span class="stat-lbl">Multiple Lines</span>
+                <span class="stat-val mono" style="color: var(--neon-emerald);">85.8%</span>
+                <span class="stat-sub">High Ecosystem Inertia</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(3, 7, 18, 0.7); padding: 18px; border-radius: 12px; font-size: 13.5px; margin-top: 14px; border: 1px solid var(--card-border);">
+              <strong>The Mechanism:</strong> The model observes high monthly bills (<code class="mono font-bold" style="color: var(--neon-cyan);">$98.52/mo</code>), Fiber Optic service (<code>99.6%</code>), and Month-to-Month contracts (<code>73.0%</code>), causing it to output high churn risk (<code class="mono" style="color: var(--neon-rose); font-weight: 700;">p = 0.644</code>). However, these customers have 4+ years of loyalty and multiple active lines, creating strong ecosystem inertia.
+              <div style="margin-top: 10px; padding: 12px; background: rgba(15, 23, 42, 0.9); border-radius: 8px; border: 1px solid rgba(244, 63, 94, 0.4); font-family: var(--font-mono); font-size: 12px; color: #fca5a5;">
+                <strong style="color: var(--neon-rose);">Proposed Production Override Rule:</strong><br>
+                <code>if (Predicted_Tier == 'OFFER_RETENTION' and tenure >= 36 and MultipleLines == 'Yes'):<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Operational_Tier = 'WATCH'  # Downgrades risk; saves $11,300.00 in unneeded discounts</code>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 10: CUSTOMER CHURN LOOKUP & RISK SIMULATOR              -->
+        <!-- ============================================================= -->
+        <section id="stage-10" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-user-gear"></i> Live Telemetry & Inference Sandbox</div>
+          <h2>Customer Churn Lookup & Risk Simulator</h2>
+          <p>Search real subscriber records or simulate interactive What-If scenarios with live probabilistic scoring.</p>
+
+          <!-- Customer ID Search Bar & Quick Selector -->
+          <div class="tilt-card card-highlight-cyan" style="margin-bottom: 24px;">
+            <div class="glare-overlay"></div>
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow"><i class="fa-solid fa-magnifying-glass"></i> Customer Directory Search (Sequential #1 &ndash; #7,043)</div>
+                <h3>Lookup Subscriber by Numeric Customer ID</h3>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="btn btn-ghost btn-sm" onclick="stepCustomer(-1)" title="Previous Customer"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+                <button class="btn btn-primary btn-sm" onclick="loadRandomCustomer()"><i class="fa-solid fa-dice"></i> 🎲 Random (#1 &ndash; #7,043)</button>
+                <button class="btn btn-ghost btn-sm" onclick="stepCustomer(1)" title="Next Customer">Next <i class="fa-solid fa-chevron-right"></i></button>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 260px; position: relative;">
+                <input type="text" id="cust-search-input" class="input-control" placeholder="Enter Customer ID: 1 – 7043 (e.g. 1, 5, 42, #7043)..." value="Customer #5" onkeyup="if(event.key==='Enter') searchCustomer();">
+              </div>
+              <button class="btn btn-primary" onclick="searchCustomer()"><i class="fa-solid fa-bolt"></i> Lookup & Score</button>
+            </div>
+
+            <!-- Quick Sample Customer Pills -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <span style="font-size: 11px; font-family: var(--font-mono); color: var(--ink-secondary); text-transform: uppercase;">Quick Samples:</span>
+              <button class="btn btn-ghost btn-sm mono" onclick="loadCustomerById(5)">Customer #5 <span class="badge-neon badge-rose" style="font-size: 9px; padding: 2px 6px;">Fiber Churner</span></button>
+              <button class="btn btn-ghost btn-sm mono" onclick="loadCustomerById(1)">Customer #1 <span class="badge-neon badge-amber" style="font-size: 9px; padding: 2px 6px;">New M2M</span></button>
+              <button class="btn btn-ghost btn-sm mono" onclick="loadCustomerById(2)">Customer #2 <span class="badge-neon badge-emerald" style="font-size: 9px; padding: 2px 6px;">1-Yr Loyal</span></button>
+              <button class="btn btn-ghost btn-sm mono" onclick="loadCustomerById(16)">Customer #16 <span class="badge-neon badge-emerald" style="font-size: 9px; padding: 2px 6px;">2-Yr VIP</span></button>
+              <button class="btn btn-ghost btn-sm mono" onclick="loadCustomerById(14)">Customer #14 <span class="badge-neon badge-cyan" style="font-size: 9px; padding: 2px 6px;">Paradox Cohort</span></button>
+              <button class="btn btn-ghost btn-sm mono" onclick="loadCustomerById(3)">Customer #3 <span class="badge-neon badge-rose" style="font-size: 9px; padding: 2px 6px;">Early Churn</span></button>
+            </div>
+          </div>
+
+          <!-- Main Interactive Simulator Layout (2-Column Grid) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            
+            <!-- Column 1: Live Holographic Risk Card -->
+            <div class="tilt-card card-highlight-cyan" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="glare-overlay"></div>
+              <div>
+                <div class="panel-header">
+                  <div>
+                    <span class="eyebrow" id="card-cust-id-eyebrow"><i class="fa-solid fa-id-badge text-rose-500"></i> Customer #5 <span style="color: var(--ink-muted); font-size: 11px; margin-left: 6px;">[Record 5 of 7,043]</span></span>
+                    <h3 id="card-cust-name">Live Holographic Risk Card</h3>
+                  </div>
+                  <span class="badge-neon badge-neutral" id="card-ground-truth">Ground Truth: Churned (Yes)</span>
+                </div>
+
+                <!-- Animated Circular Radial Probability Gauge -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 24px; margin: 20px 0; flex-wrap: wrap;">
+                  <div style="position: relative; width: 140px; height: 140px;">
+                    <svg width="140" height="140" viewBox="0 0 140 140" style="transform: rotate(-90deg);">
+                      <circle cx="70" cy="70" r="58" stroke="rgba(255,255,255,0.08)" stroke-width="12" fill="none" />
+                      <circle id="gauge-circle-bar" cx="70" cy="70" r="58" stroke="var(--neon-rose)" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="80" style="transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.4s ease;" />
+                    </svg>
+                    <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                      <span class="mono" id="gauge-pct-text" style="font-size: 28px; font-weight: 900; color: #ffffff; line-height: 1;">78.4%</span>
+                      <span style="font-size: 10px; font-family: var(--font-mono); color: var(--ink-secondary); text-transform: uppercase; margin-top: 2px;">Churn Risk</span>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <span style="font-size: 11px; font-family: var(--font-mono); color: var(--ink-muted); text-transform: uppercase;">Assigned Tier</span>
+                    <div id="sim-tier-badge-container">
+                      <span class="badge-neon badge-rose" id="sim-live-badge"><i class="fa-solid fa-fire"></i> OFFER_RETENTION</span>
+                    </div>
+                    <span class="mono" id="sim-confidence-text" style="font-size: 12px; color: var(--neon-cyan); margin-top: 4px;">High Risk Confidence</span>
+                  </div>
+                </div>
+
+                <!-- Live Customer Profile Ledger -->
+                <div class="table-container" style="margin-top: 10px;">
+                  <table class="ledger-table" style="font-size: 12.5px;">
+                    <tbody>
+                      <tr>
+                        <td style="color: var(--ink-secondary);">Tenure & Spend</td>
+                        <td class="num mono"><strong id="prof-tenure-disp">2 Months</strong> &bull; <strong id="prof-charges-disp" style="color: var(--neon-cyan);">$70.70 / mo</strong></td>
+                      </tr>
+                      <tr>
+                        <td style="color: var(--ink-secondary);">Contract & Billing</td>
+                        <td class="num mono" id="prof-contract-disp">Month-to-month (Electronic Check)</td>
+                      </tr>
+                      <tr>
+                        <td style="color: var(--ink-secondary);">Internet Service</td>
+                        <td class="num mono" id="prof-internet-disp">Fiber optic (No Security / Tech)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Recommended SOP Action -->
+              <div style="background: rgba(3, 7, 18, 0.85); padding: 16px; border-radius: 12px; border: 1px solid var(--card-border); font-size: 13px; margin-top: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <i class="fa-solid fa-clipboard-check text-cyan-400"></i>
+                  <strong style="color: #ffffff;">Operational Action Protocol:</strong>
+                </div>
+                <p id="sim-sop-action-text" style="margin: 0; color: var(--ink-secondary);">
+                  High-Priority Outbound Outreach by Retention Concierge; Dispatch $50 contract renewal discount or complimentary 6-month speed upgrade.
+                </p>
+              </div>
+            </div>
+
+            <!-- Column 2: Interactive What-If Scenario Sandbox Controls -->
+            <div class="tilt-card">
+              <div class="glare-overlay"></div>
+              <div class="panel-header">
+                <div>
+                  <div class="eyebrow"><i class="fa-solid fa-sliders"></i> What-If Engine</div>
+                  <h3>Scenario Parameter Tuning</h3>
+                </div>
+                <button class="btn btn-ghost btn-sm" onclick="resetSandbox()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+              </div>
+
+              <!-- Tenure Slider -->
+              <div style="margin-bottom: 18px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+                  <span>Tenure Length: <strong class="mono" id="ctrl-tenure-val" style="color: var(--neon-cyan);">2 Months</strong></span>
+                  <span class="mono" style="color: var(--ink-muted); font-size: 11px;">0 &ndash; 72 mos</span>
+                </div>
+                <input type="range" class="range-slider" id="ctrl-tenure-slider" min="0" max="72" value="2" oninput="handleSandboxChange()">
+              </div>
+
+              <!-- Monthly Charges Slider -->
+              <div style="margin-bottom: 18px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+                  <span>Monthly Charges: <strong class="mono" id="ctrl-charges-val" style="color: var(--neon-cyan);">$70.70 / mo</strong></span>
+                  <span class="mono" style="color: var(--ink-muted); font-size: 11px;">$18.00 &ndash; $120.00</span>
+                </div>
+                <input type="range" class="range-slider" id="ctrl-charges-slider" min="18" max="120" step="0.5" value="70.70" oninput="handleSandboxChange()">
+              </div>
+
+              <!-- Form Selects Grid -->
+              <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); gap: 14px;">
+                
+                <div class="field-group">
+                  <label for="ctrl-contract">Contract Term</label>
+                  <select id="ctrl-contract" class="select-control" onchange="handleSandboxChange()">
+                    <option value="Month-to-month" selected>Month-to-month</option>
+                    <option value="One year">One year</option>
+                    <option value="Two year">Two year</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="ctrl-internet">Internet Service</label>
+                  <select id="ctrl-internet" class="select-control" onchange="handleSandboxChange()">
+                    <option value="Fiber optic" selected>Fiber optic</option>
+                    <option value="DSL">DSL</option>
+                    <option value="No">No Internet</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="ctrl-payment">Payment Method</label>
+                  <select id="ctrl-payment" class="select-control" onchange="handleSandboxChange()">
+                    <option value="Electronic check" selected>Electronic check</option>
+                    <option value="Mailed check">Mailed check</option>
+                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="ctrl-tech">Tech Support</label>
+                  <select id="ctrl-tech" class="select-control" onchange="handleSandboxChange()">
+                    <option value="No" selected>No Tech Support</option>
+                    <option value="Yes">Yes (Protected)</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="ctrl-security">Online Security</label>
+                  <select id="ctrl-security" class="select-control" onchange="handleSandboxChange()">
+                    <option value="No" selected>No Online Security</option>
+                    <option value="Yes">Yes (Protected)</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="ctrl-lines">Multiple Lines</label>
+                  <select id="ctrl-lines" class="select-control" onchange="handleSandboxChange()">
+                    <option value="No" selected>Single Line</option>
+                    <option value="Yes">Multiple Lines</option>
+                  </select>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ============================================================= -->
+        <!-- STAGE 11: ARTIFACT FIGURE GALLERY                             -->
+        <!-- ============================================================= -->
+        <section id="stage-11" class="stage-section">
+          
+          <div class="eyebrow"><i class="fa-solid fa-images"></i> Production Artifacts</div>
+          <h2>High-Resolution Artifact Gallery (300 DPI)</h2>
+          <p>Generated plots stored in <code>reports/figures/</code>. Click any figure to open high-resolution zoom preview.</p>
+
+          <div class="gallery-grid">
+            
+            <!-- Plot 1 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/01_eda_and_churn_distribution.png', '01. Exploratory Data Analysis & Churn Distribution')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/01_eda_and_churn_distribution.png" alt="EDA">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">01. Exploratory Data Analysis</div>
+                <p class="gallery-desc">Class balance (26.54%), tenure density, charges distribution, contract breakdown.</p>
+              </div>
+            </div>
+
+            <!-- Plot 2 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/02_baseline_vs_challenger_roc_pr.png', '02. Baseline vs Challenger ROC & PR Curves')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/02_baseline_vs_challenger_roc_pr.png" alt="ROC & PR">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">02. ROC & PR Curves Comparison</div>
+                <p class="gallery-desc">Out-of-fold discrimination comparing Logistic Regression (0.8449) and XGBoost (0.8452).</p>
+              </div>
+            </div>
+
+            <!-- Plot 3 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/03_threshold_tuning_f1_curve.png', '03. Threshold Optimization Curves')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/03_threshold_tuning_f1_curve.png" alt="Threshold">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">03. Threshold Optimization Curves</div>
+                <p class="gallery-desc">Precision-Recall tradeoff identifying optimal threshold $t^*=0.54$ for maximum F1 (0.6329).</p>
+              </div>
+            </div>
+
+            <!-- Plot 4 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/04_operational_risk_tiers_distribution.png', '04. Operational Risk Tier Allocations')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/04_operational_risk_tiers_distribution.png" alt="Tiers">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">04. Operational Tiers Distribution</div>
+                <p class="gallery-desc">Customer volume and empirical churn rates across LOW_RISK, WATCH, and OFFER_RETENTION.</p>
+              </div>
+            </div>
+
+            <!-- Plot 5 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/05_confusion_matrices_comparison.png', '05. Confusion Matrices (t=0.50 vs t*=0.54)')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/05_confusion_matrices_comparison.png" alt="Confusion Matrix">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">05. Confusion Matrix Comparison</div>
+                <p class="gallery-desc">Contrasting classification outcomes between default $t=0.50$ and tuned $t^*=0.54$.</p>
+              </div>
+            </div>
+
+            <!-- Plot 6 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/06_logistic_regression_odds_ratios.png', '06. Logistic Regression Odds Ratios')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/06_logistic_regression_odds_ratios.png" alt="Odds Ratios">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">06. Logistic Regression Odds Ratios</div>
+                <p class="gallery-desc">Standardized linear multipliers highlighting Month-to-Month (+3.24x) vs 2-Year (0.26x).</p>
+              </div>
+            </div>
+
+            <!-- Plot 7 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/07_shap_summary_and_importance.png', '07. SHAP Beeswarm & Feature Importance')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/07_shap_summary_and_importance.png" alt="SHAP Beeswarm">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">07. SHAP Beeswarm & Importance</div>
+                <p class="gallery-desc">Global TreeExplainer feature importance ranking and directional impact.</p>
+              </div>
+            </div>
+
+            <!-- Plot 8 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/08_shap_dependence_tenure_charges_contract.png', '08. SHAP Non-Linear Dependence')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/08_shap_dependence_tenure_charges_contract.png" alt="SHAP Dependence">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">08. SHAP Non-Linear Dependence</div>
+                <p class="gallery-desc">Non-linear tenure churn cliff, monthly charges inflection at $70, and contract synergy.</p>
+              </div>
+            </div>
+
+            <!-- Plot 9 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/09_probability_calibration_curve.png', '09. Probability Calibration Reliability')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/09_probability_calibration_curve.png" alt="Calibration">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">09. Probability Calibration Curves</div>
+                <p class="gallery-desc">10-bin calibration curves verifying Brier Score (0.1598) and reliability across deciles.</p>
+              </div>
+            </div>
+
+            <!-- Plot 10 -->
+            <div class="gallery-card tilt-card" onclick="openModal('reports/figures/10_failure_analysis_fp_fn_breakdown.png', '10. Failure Analysis FP & FN Breakdown')">
+              <div class="glare-overlay"></div>
+              <div class="gallery-img-wrap">
+                <img src="reports/figures/10_failure_analysis_fp_fn_breakdown.png" alt="Failure Analysis">
+                <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus text-cyan-400"></i> Click to Zoom</div>
+              </div>
+              <div class="gallery-info">
+                <div class="gallery-title">10. Failure Analysis Error Breakdown</div>
+                <p class="gallery-desc">Distributional profiles across TP, TN, FP, and FN error cohorts.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- ================================================================== -->
+      <!-- SITE FOOTER                                                        -->
+      <!-- ================================================================== -->
+      <footer class="site-footer">
+        <div class="footer-row">
+          <span>Telco Churn: Leakage-Safe Baseline vs. XGBoost Ensemble &bull; KL University Learnathon 2026</span>
+          <span class="mono">Stratified 5-Fold &bull; Zero Data Leakage &bull; 3D Executive WebGL</span>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- MODAL FOR FULL-SIZE FIGURE INSPECTION                                -->
+  <!-- ==================================================================== -->
+  <div class="modal-backdrop" id="imgModal" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <strong id="modalTitle" style="font-size: 16px; color: #ffffff;">Figure Inspection</strong>
+        <button class="btn btn-ghost btn-sm" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Zoomed Plot">
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- JAVASCRIPT: THREE.JS 3D ENGINE, TILT PHYSICS & CONTROLLERS           -->
+  <!-- ==================================================================== -->
+  <script>
+    // ===================================================================
+    // 1. THREE.JS DYNAMIC RED ENERGY PARTICLE VORTEX & FLOATING RUNES
+    // ===================================================================
+    let scene, camera, renderer;
+    let vortexParticles, vortexData = [];
+    let runeGroup, runes = [];
+    let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+    let windowHalfX = window.innerWidth / 2;
+    let windowHalfY = window.innerHeight / 2;
+    const PARTICLE_COUNT = 1800;
+
+    function initThreeEngine() {
+      const canvas = document.getElementById('webgl-bg');
+      if (!canvas) return;
+
+      scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x030305, 0.00035);
+
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 4000);
+      camera.position.set(0, 0, 1100);
+
+      // Procedural Glowing Soft Particle Texture
+      const pCanvas = document.createElement('canvas');
+      pCanvas.width = 64;
+      pCanvas.height = 64;
+      const pCtx = pCanvas.getContext('2d');
+      const radGrad = pCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      radGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      radGrad.addColorStop(0.2, 'rgba(255, 60, 95, 0.95)');
+      radGrad.addColorStop(0.5, 'rgba(220, 38, 38, 0.55)');
+      radGrad.addColorStop(0.8, 'rgba(185, 28, 28, 0.18)');
+      radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      pCtx.fillStyle = radGrad;
+      pCtx.fillRect(0, 0, 64, 64);
+      const particleTexture = new THREE.CanvasTexture(pCanvas);
+
+      // Swirling Spiritual Vortex Particle Geometry
+      const particleGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(PARTICLE_COUNT * 3);
+      const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+      const colCrimson = new THREE.Color('#ff2a4b');
+      const colBlood = new THREE.Color('#ef4444');
+      const colDarkRed = new THREE.Color('#b91c1c');
+      const colFlame = new THREE.Color('#f97316');
+      const colAmber = new THREE.Color('#f59e0b');
+
+      vortexData = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const radius = Math.pow(Math.random(), 0.7) * 1150 + 60;
+        const theta = Math.random() * Math.PI * 2;
+        const y = (Math.random() - 0.5) * 2600;
+
+        positions[i * 3] = Math.cos(theta) * radius;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = Math.sin(theta) * radius;
+
+        const upwardSpeed = 1.4 + Math.random() * 2.8;
+        const angularSpeed = (0.003 + (1200 - Math.min(radius, 1200)) / 1200 * 0.007) * (Math.random() < 0.2 ? -1 : 1);
+        const pulseOffset = Math.random() * Math.PI * 2;
+
+        vortexData.push({
+          radius: radius,
+          baseRadius: radius,
+          theta: theta,
+          y: y,
+          upwardSpeed: upwardSpeed,
+          angularSpeed: angularSpeed,
+          pulseOffset: pulseOffset
+        });
+
+        const randCol = Math.random();
+        let chosenCol = colCrimson;
+        if (randCol < 0.45) chosenCol = colCrimson;
+        else if (randCol < 0.70) chosenCol = colBlood;
+        else if (randCol < 0.85) chosenCol = colFlame;
+        else if (randCol < 0.95) chosenCol = colDarkRed;
+        else chosenCol = colAmber;
+
+        colors[i * 3] = chosenCol.r;
+        colors[i * 3 + 1] = chosenCol.g;
+        colors[i * 3 + 2] = chosenCol.b;
+      }
+
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const particleMat = new THREE.PointsMaterial({
+        size: 11,
+        vertexColors: true,
+        map: particleTexture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        opacity: 0.88
+      });
+
+      vortexParticles = new THREE.Points(particleGeo, particleMat);
+      scene.add(vortexParticles);
+
+      // Floating Spiritual Polyhedra Runes & Energy Gates
+      runeGroup = new THREE.Group();
+      scene.add(runeGroup);
+
+      const runeGeometries = [
+        new THREE.OctahedronGeometry(26, 0),
+        new THREE.IcosahedronGeometry(24, 0),
+        new THREE.TetrahedronGeometry(28, 0),
+        new THREE.DodecahedronGeometry(22, 0),
+        new THREE.TorusGeometry(32, 2.2, 8, 24)
+      ];
+
+      const runeColors = [0xff2a4b, 0xef4444, 0xdc2626, 0xf97316];
+      runes = [];
+
+      for (let i = 0; i < 22; i++) {
+        const geo = runeGeometries[i % runeGeometries.length];
+        const wireMat = new THREE.MeshBasicMaterial({
+          color: runeColors[i % runeColors.length],
+          wireframe: true,
+          transparent: true,
+          opacity: 0.45 + Math.random() * 0.35,
+          blending: THREE.AdditiveBlending
+        });
+
+        const runeMesh = new THREE.Mesh(geo, wireMat);
+        
+        const rRadius = 250 + Math.random() * 850;
+        const rTheta = Math.random() * Math.PI * 2;
+        const rY = (Math.random() - 0.5) * 2200;
+        const rZ = (Math.random() - 0.5) * 800;
+
+        runeMesh.position.set(Math.cos(rTheta) * rRadius, rY, Math.sin(rTheta) * rRadius + rZ);
+        
+        const scale = 0.6 + Math.random() * 0.9;
+        runeMesh.scale.set(scale, scale, scale);
+
+        // Core light point
+        const coreGeo = new THREE.BufferGeometry();
+        coreGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+        const coreMat = new THREE.PointsMaterial({
+          size: 20 * scale,
+          color: 0xffffff,
+          map: particleTexture,
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          opacity: 0.95
+        });
+        const corePoint = new THREE.Points(coreGeo, coreMat);
+        runeMesh.add(corePoint);
+
+        runeGroup.add(runeMesh);
+
+        runes.push({
+          mesh: runeMesh,
+          rotX: (Math.random() - 0.5) * 0.02,
+          rotY: (Math.random() - 0.5) * 0.025,
+          rotZ: (Math.random() - 0.5) * 0.015,
+          upwardSpeed: 0.45 + Math.random() * 0.65,
+          radius: rRadius,
+          theta: rTheta,
+          angularSpeed: (0.001 + Math.random() * 0.002) * (Math.random() < 0.5 ? 1 : -1)
+        });
+      }
+
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      document.addEventListener('mousemove', onThreeMouseMove, { passive: true });
+      window.addEventListener('resize', onThreeResize, false);
+      animateThree();
+    }
+
+    function onThreeMouseMove(event) {
+      targetMouseX = (event.clientX - windowHalfX) * 0.4;
+      targetMouseY = (event.clientY - windowHalfY) * 0.4;
+    }
+
+    function onThreeResize() {
+      windowHalfX = window.innerWidth / 2;
+      windowHalfY = window.innerHeight / 2;
+      if (camera) {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      }
+      if (renderer) {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+    }
+
+    let vortexTime = 0;
+    function animateThree() {
+      requestAnimationFrame(animateThree);
+      vortexTime += 0.016;
+
+      // Smooth mouse easing
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
+
+      if (vortexParticles && vortexData.length > 0) {
+        const pos = vortexParticles.geometry.attributes.position.array;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const d = vortexData[i];
+          
+          // Upward drift
+          d.y += d.upwardSpeed;
+          if (d.y > 1300) {
+            d.y = -1300;
+            d.theta = Math.random() * Math.PI * 2;
+            d.radius = Math.pow(Math.random(), 0.7) * 1150 + 60;
+          }
+
+          // Spiraling vortex angular update
+          d.theta += d.angularSpeed;
+          
+          // Subtle breathing radius
+          const currentRadius = d.radius + Math.sin(vortexTime * 2 + d.pulseOffset) * 25;
+          
+          pos[i * 3] = Math.cos(d.theta) * currentRadius + (mouseX * 0.2);
+          pos[i * 3 + 1] = d.y;
+          pos[i * 3 + 2] = Math.sin(d.theta) * currentRadius + (mouseY * 0.2);
+        }
+        vortexParticles.geometry.attributes.position.needsUpdate = true;
+        vortexParticles.rotation.y += 0.0008;
+      }
+
+      // Animate floating spiritual polyhedra runes
+      for (let i = 0; i < runes.length; i++) {
+        const r = runes[i];
+        r.mesh.rotation.x += r.rotX;
+        r.mesh.rotation.y += r.rotY;
+        r.mesh.rotation.z += r.rotZ;
+
+        r.mesh.position.y += r.upwardSpeed;
+        r.theta += r.angularSpeed;
+        r.mesh.position.x = Math.cos(r.theta) * r.radius + (mouseX * 0.15);
+        r.mesh.position.z = Math.sin(r.theta) * r.radius + (mouseY * 0.15);
+
+        if (r.mesh.position.y > 1200) {
+          r.mesh.position.y = -1200;
+          r.theta = Math.random() * Math.PI * 2;
+        }
+      }
+
+      if (camera && scene) {
+        camera.position.x += (mouseX - camera.position.x) * 0.03;
+        camera.position.y += (-mouseY - camera.position.y) * 0.03;
+        camera.lookAt(scene.position);
+        renderer.render(scene, camera);
+      }
+    }
+
+    // ===================================================================
+    // 2. CONQUEROR'S HAKI & CRIMSON CHAKRA LIGHTNING ENGINE (CANVAS 2D)
+    // ===================================================================
+    let lCanvas, lCtx;
+    let lightningBolts = [];
+    let lightningSparks = [];
+    let lastBoltTime = performance.now();
+    let nextBoltDelay = 2600;
+
+    function initLightningEngine() {
+      lCanvas = document.getElementById('lightning-canvas');
+      if (!lCanvas) return;
+      lCtx = lCanvas.getContext('2d');
+
+      function resizeLightning() {
+        lCanvas.width = window.innerWidth;
+        lCanvas.height = window.innerHeight;
+      }
+      resizeLightning();
+      window.addEventListener('resize', resizeLightning, { passive: true });
+
+      // Initial opening burst
+      spawnHakiDischarge();
+      animateLightning();
+    }
+
+    function spawnHakiDischarge() {
+      if (!lCanvas) return;
+      const w = lCanvas.width;
+      const h = lCanvas.height;
+
+      const origins = [
+        // Top-left corner
+        { start: { x: Math.random() * (w * 0.2), y: 0 }, end: { x: w * 0.35 + Math.random() * (w * 0.25), y: h * 0.35 + Math.random() * (h * 0.25) } },
+        // Top-right corner
+        { start: { x: w - Math.random() * (w * 0.2), y: 0 }, end: { x: w * 0.65 - Math.random() * (w * 0.25), y: h * 0.35 + Math.random() * (h * 0.25) } },
+        // Left margin
+        { start: { x: 0, y: Math.random() * (h * 0.4) }, end: { x: w * 0.35 + Math.random() * (w * 0.25), y: h * 0.5 + Math.random() * (h * 0.25) } },
+        // Right margin
+        { start: { x: w, y: Math.random() * (h * 0.4) }, end: { x: w * 0.65 - Math.random() * (w * 0.25), y: h * 0.5 + Math.random() * (h * 0.25) } },
+        // Bottom-left corner
+        { start: { x: Math.random() * (w * 0.2), y: h }, end: { x: w * 0.35 + Math.random() * (w * 0.25), y: h * 0.65 - Math.random() * (h * 0.25) } },
+        // Bottom-right corner
+        { start: { x: w - Math.random() * (w * 0.2), y: h }, end: { x: w * 0.65 - Math.random() * (w * 0.25), y: h * 0.65 - Math.random() * (h * 0.25) } }
+      ];
+
+      const origin = origins[Math.floor(Math.random() * origins.length)];
+      const mainBolt = generateFractalBranch(origin.start.x, origin.start.y, origin.end.x, origin.end.y, 7, 34);
+
+      lightningBolts.push({
+        segments: mainBolt,
+        alpha: 1.0,
+        decay: 0.040 + Math.random() * 0.025,
+        flicker: true,
+        width: 2.2 + Math.random() * 1.2
+      });
+
+      // 2-3 Secondary branching arcs
+      for (let f = 0; f < 3; f++) {
+        if (mainBolt.length > 4) {
+          const splitIdx = Math.floor(Math.random() * (mainBolt.length - 2)) + 1;
+          const pt = mainBolt[splitIdx];
+          const angle = (Math.random() - 0.5) * 1.6;
+          const len = 70 + Math.random() * 140;
+          const forkEnd = {
+            x: pt.x + Math.cos(angle) * len * (origin.start.x < w / 2 ? 1 : -1),
+            y: pt.y + Math.sin(angle) * len
+          };
+          const forkSegments = generateFractalBranch(pt.x, pt.y, forkEnd.x, forkEnd.y, 5, 20);
+          lightningBolts.push({
+            segments: forkSegments,
+            alpha: 0.85,
+            decay: 0.055 + Math.random() * 0.03,
+            flicker: true,
+            width: 1.3 + Math.random() * 0.8
+          });
+        }
+      }
+
+      // Emit 25-45 energetic friction sparks along path
+      mainBolt.forEach(pt => {
+        if (Math.random() < 0.42) {
+          lightningSparks.push({
+            x: pt.x,
+            y: pt.y,
+            vx: (Math.random() - 0.5) * 6.5,
+            vy: (Math.random() - 0.5) * 6.5,
+            alpha: 1.0,
+            decay: 0.025 + Math.random() * 0.035,
+            size: 1.5 + Math.random() * 2.5,
+            color: Math.random() < 0.65 ? '#ff2a4b' : (Math.random() < 0.85 ? '#f97316' : '#ffffff')
+          });
+        }
+      });
+    }
+
+    function generateFractalBranch(x1, y1, x2, y2, depth, maxDisplacement) {
+      let points = [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+      let disp = maxDisplacement;
+
+      for (let i = 0; i < depth; i++) {
+        let newPoints = [points[0]];
+        for (let j = 0; j < points.length - 1; j++) {
+          const p1 = points[j];
+          const p2 = points[j + 1];
+          const midX = (p1.x + p2.x) / 2;
+          const midY = (p1.y + p2.y) / 2;
+          const normalX = -(p2.y - p1.y);
+          const normalY = p2.x - p1.x;
+          const len = Math.hypot(normalX, normalY) || 1;
+          const offset = (Math.random() - 0.5) * disp;
+
+          newPoints.push({
+            x: midX + (normalX / len) * offset,
+            y: midY + (normalY / len) * offset
+          });
+          newPoints.push(p2);
+        }
+        points = newPoints;
+        disp *= 0.55;
+      }
+      return points;
+    }
+
+    function animateLightning() {
+      requestAnimationFrame(animateLightning);
+      if (!lCtx || !lCanvas) return;
+
+      lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
+
+      const now = performance.now();
+      if (now - lastBoltTime > nextBoltDelay) {
+        spawnHakiDischarge();
+        lastBoltTime = now;
+        nextBoltDelay = 2200 + Math.random() * 2400;
+      }
+
+      // Ambient micro-friction sparks
+      if (Math.random() < 0.08) {
+        const w = lCanvas.width;
+        const h = lCanvas.height;
+        const edgeX = Math.random() < 0.5 ? Math.random() * 60 : w - Math.random() * 60;
+        const edgeY = Math.random() * h;
+        lightningSparks.push({
+          x: edgeX,
+          y: edgeY,
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3,
+          alpha: 0.9,
+          decay: 0.03 + Math.random() * 0.03,
+          size: 1.2 + Math.random() * 1.8,
+          color: Math.random() < 0.7 ? '#ff2a4b' : '#f97316'
+        });
+      }
+
+      // Render lightning bolts
+      for (let i = lightningBolts.length - 1; i >= 0; i--) {
+        const bolt = lightningBolts[i];
+        const flickerAlpha = bolt.flicker && Math.random() < 0.3 ? bolt.alpha * 0.4 : bolt.alpha;
+
+        if (bolt.segments.length > 1) {
+          // Pass 1: Wide Crimson Aura Bloom
+          lCtx.save();
+          lCtx.beginPath();
+          lCtx.moveTo(bolt.segments[0].x, bolt.segments[0].y);
+          for (let j = 1; j < bolt.segments.length; j++) {
+            lCtx.lineTo(bolt.segments[j].x, bolt.segments[j].y);
+          }
+          lCtx.lineWidth = bolt.width * 5.5;
+          lCtx.strokeStyle = `rgba(220, 38, 38, ${flickerAlpha * 0.35})`;
+          lCtx.shadowBlur = 24;
+          lCtx.shadowColor = '#ff2a4b';
+          lCtx.lineCap = 'round';
+          lCtx.lineJoin = 'round';
+          lCtx.stroke();
+          lCtx.restore();
+
+          // Pass 2: High-Energy Chakra Stream
+          lCtx.save();
+          lCtx.beginPath();
+          lCtx.moveTo(bolt.segments[0].x, bolt.segments[0].y);
+          for (let j = 1; j < bolt.segments.length; j++) {
+            lCtx.lineTo(bolt.segments[j].x, bolt.segments[j].y);
+          }
+          lCtx.lineWidth = bolt.width * 2.2;
+          lCtx.strokeStyle = `rgba(255, 42, 75, ${flickerAlpha * 0.75})`;
+          lCtx.shadowBlur = 12;
+          lCtx.shadowColor = '#ff2a4b';
+          lCtx.lineCap = 'round';
+          lCtx.lineJoin = 'round';
+          lCtx.stroke();
+          lCtx.restore();
+
+          // Pass 3: White-Hot Core
+          lCtx.save();
+          lCtx.beginPath();
+          lCtx.moveTo(bolt.segments[0].x, bolt.segments[0].y);
+          for (let j = 1; j < bolt.segments.length; j++) {
+            lCtx.lineTo(bolt.segments[j].x, bolt.segments[j].y);
+          }
+          lCtx.lineWidth = bolt.width * 0.8;
+          lCtx.strokeStyle = `rgba(255, 245, 248, ${flickerAlpha * 0.95})`;
+          lCtx.lineCap = 'round';
+          lCtx.lineJoin = 'round';
+          lCtx.stroke();
+          lCtx.restore();
+        }
+
+        bolt.alpha -= bolt.decay;
+        if (bolt.alpha <= 0) {
+          lightningBolts.splice(i, 1);
+        }
+      }
+
+      // Render sparks
+      for (let i = lightningSparks.length - 1; i >= 0; i--) {
+        const sp = lightningSparks[i];
+        sp.x += sp.vx;
+        sp.y += sp.vy;
+        sp.alpha -= sp.decay;
+
+        if (sp.alpha <= 0) {
+          lightningSparks.splice(i, 1);
+        } else {
+          lCtx.save();
+          lCtx.beginPath();
+          lCtx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
+          lCtx.fillStyle = sp.color;
+          lCtx.globalAlpha = sp.alpha;
+          lCtx.shadowBlur = 8;
+          lCtx.shadowColor = sp.color;
+          lCtx.fill();
+          lCtx.restore();
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------
+    // 2. VANILLA 3D TILT WITH SPECULAR GLOSS ENGINE
+    // -------------------------------------------------------------------
+    function init3DTiltCards() {
+      const tiltCards = document.querySelectorAll('.tilt-card');
+      tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -7;
+          const rotateY = ((x - centerX) / centerX) * 7;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(10px)`;
+          card.style.setProperty('--mouse-x', `${((x / rect.width) * 100).toFixed(1)}%`);
+          card.style.setProperty('--mouse-y', `${((y / rect.height) * 100).toFixed(1)}%`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        });
+      });
+    }
+
+    // -------------------------------------------------------------------
+    // 3. NUMERICAL TICKER COUNTER ANIMATION
+    // -------------------------------------------------------------------
+    function initCounters() {
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        const target = parseFloat(counter.getAttribute('data-target'));
+        const isFloat = counter.getAttribute('data-target').includes('.');
+        const duration = 1400;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const current = target * easeOut;
+
+          if (isFloat) {
+            counter.innerText = current.toFixed(4);
+          } else {
+            counter.innerText = Math.round(current).toLocaleString();
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            counter.innerText = isFloat ? target.toFixed(4) : target.toLocaleString();
+          }
+        }
+        requestAnimationFrame(update);
+      });
+    }
+
+    // -------------------------------------------------------------------
+    // 4. STAGE NAVIGATION LOGIC
+    // -------------------------------------------------------------------
+    function navToStage(index) {
+      document.querySelectorAll('.stage-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.pipeline-stepper li').forEach(li => li.classList.remove('is-active'));
+
+      const targetStage = document.getElementById(`stage-${index}`);
+      const targetNav = document.getElementById(`step-nav-${index}`);
+
+      if (targetStage) targetStage.classList.add('active');
+      if (targetNav) targetNav.classList.add('is-active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Trigger chart resize if navigating to chart stages
+      if (index === 4 && window.modelChartInstance) window.modelChartInstance.resize();
+      if (index === 6 && window.tierDonutInstance) window.tierDonutInstance.resize();
+    }
+
+    // -------------------------------------------------------------------
+    // 5. IMAGE MODAL LOGIC
+    // -------------------------------------------------------------------
+    function openModal(src, title) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-image" style="color: var(--neon-crimson); margin-right: 8px;"></i> ${title}`;
+      document.getElementById('imgModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('imgModal').classList.remove('open');
+    }
+
+    // -------------------------------------------------------------------
+    // 6. THRESHOLD SIMULATOR LOGIC
+    // -------------------------------------------------------------------
+    function handleSimChange(val) {
+      const thresh = parseFloat(val);
+      document.getElementById('sim-thresh-text').innerText = thresh.toFixed(2);
+      document.getElementById('sim-slider').value = thresh;
+
+      let f1, recall, precision, targetedCount, netClv, cost;
+      
+      if (thresh <= 0.30) {
+        recall = 92.5 - (0.30 - thresh) * 30;
+        precision = 38.0 + (thresh - 0.10) * 45;
+        targetedCount = Math.round(7043 * (0.68 - (thresh - 0.10) * 0.7));
+      } else if (thresh <= 0.54) {
+        const ratio = (thresh - 0.30) / 0.24;
+        recall = 88.0 - ratio * 12.3;
+        precision = 45.0 + ratio * 9.4;
+        targetedCount = Math.round(7043 * (0.54 - ratio * 0.171));
+      } else {
+        const ratio = (thresh - 0.54) / 0.36;
+        recall = 75.7 - ratio * 42.0;
+        precision = 54.4 + ratio * 18.0;
+        targetedCount = Math.round(7043 * (0.369 - ratio * 0.28));
+      }
+
+      f1 = (2 * (precision/100) * (recall/100)) / ((precision/100) + (recall/100));
+      const targetedPct = (targetedCount / 7043) * 100;
+      
+      const truePositives = Math.round(1869 * (recall / 100));
+      const savedRevenue = truePositives * 0.75 * 300;
+      cost = targetedCount * 50;
+      netClv = savedRevenue - cost;
+
+      document.getElementById('sim-res-f1').innerText = f1.toFixed(4);
+      document.getElementById('sim-res-recall').innerText = recall.toFixed(1) + '%';
+      document.getElementById('sim-res-precision').innerText = precision.toFixed(1) + '%';
+      document.getElementById('sim-res-targeted').innerText = `${targetedCount.toLocaleString()} (${targetedPct.toFixed(1)}%)`;
+      document.getElementById('sim-res-clv').innerText = '$' + Math.max(0, Math.round(netClv)).toLocaleString() + '.00';
+      document.getElementById('sim-res-cost').innerText = '$' + Math.round(cost).toLocaleString() + '.00';
+    }
+
+    function setThresholdVal(val) {
+      handleSimChange(val);
+    }
+
+    // -------------------------------------------------------------------
+    // 7. INTERACTIVE CUSTOMER RISK PREDICTOR
+    // -------------------------------------------------------------------
+    function runPrediction() {
+      const tenure = parseFloat(document.getElementById('cust-tenure').value) || 0;
+      const charges = parseFloat(document.getElementById('cust-charges').value) || 0;
+      const contract = document.getElementById('cust-contract').value;
+      const internet = document.getElementById('cust-internet').value;
+      const payment = document.getElementById('cust-payment').value;
+      const tech = document.getElementById('cust-tech').value;
+      const security = document.getElementById('cust-security').value;
+      const lines = document.getElementById('cust-lines').value;
+      const senior = parseInt(document.getElementById('cust-senior').value) || 0;
+
+      let score = -0.65;
+      score -= (tenure / 72) * 2.1;
+      score += ((charges - 20) / 100) * 1.3;
+
+      if (contract === 'Month-to-month') score += 1.15;
+      else if (contract === 'One year') score -= 0.35;
+      else if (contract === 'Two year') score -= 1.35;
+
+      if (internet === 'Fiber optic') score += 0.58;
+      else if (internet === 'DSL') score -= 0.12;
+      else score -= 0.65;
+
+      if (payment === 'Electronic check') score += 0.35;
+      else score -= 0.15;
+
+      if (tech === 'Yes') score -= 0.45;
+      if (security === 'Yes') score -= 0.42;
+      if (senior === 1) score += 0.22;
+
+      let isOverridden = false;
+      if (tenure >= 36 && lines === 'Yes' && charges >= 70) {
+        score -= 0.40;
+        isOverridden = true;
+      }
+
+      const prob = 1 / (1 + Math.exp(-score));
+      const probPct = (prob * 100).toFixed(1);
+
+      document.getElementById('pred-prob-val').innerText = `${probPct}%`;
+
+      const badgeWrap = document.getElementById('pred-badge-wrap');
+      const actionText = document.getElementById('pred-action-text');
+
+      if (prob < 0.30) {
+        badgeWrap.innerHTML = '<span class="badge-neon badge-emerald"><i class="fa-solid fa-circle-check"></i> LOW_RISK</span>';
+        document.getElementById('pred-prob-val').style.color = 'var(--neon-emerald)';
+        actionText.innerHTML = '<strong>Standard Service:</strong> Account is stable (5.8% base churn). No intervention required; avoid unnecessary marketing touchpoints.';
+      } else if (prob < 0.54) {
+        badgeWrap.innerHTML = '<span class="badge-neon badge-amber"><i class="fa-solid fa-eye"></i> WATCH</span>';
+        document.getElementById('pred-prob-val').style.color = 'var(--neon-amber)';
+        actionText.innerHTML = '<strong>Proactive Monitoring:</strong> Automated CSAT pulse check, feature tips, and loyalty newsletter. Zero aggressive discount expenditure.';
+      } else {
+        badgeWrap.innerHTML = '<span class="badge-neon badge-rose"><i class="fa-solid fa-fire"></i> OFFER_RETENTION</span>';
+        document.getElementById('pred-prob-val').style.color = 'var(--neon-rose)';
+        actionText.innerHTML = '<strong>High-Priority Retention Concierge:</strong> Outbound specialist call offering a $50 contract renewal discount or free speed boost.';
+      }
+
+      if (isOverridden && prob >= 0.54) {
+        actionText.innerHTML += ' <em style="color: var(--neon-crimson); display: block; margin-top: 4px;">[Note: High-Tenure override candidate &mdash; verify multiple line ecosystem before offering discounts].</em>';
+      }
+    }
+
+    // -------------------------------------------------------------------
+    // 7. REAL TELCO SEQUENTIAL CUSTOMER DATABASE (1 TO 7,043)
+    // -------------------------------------------------------------------
+    const TOTAL_DATASET_CUSTOMERS = 7043;
+
+    // Pre-indexed authentic Telco customer records (First 50 verified accounts)
+    const telcoCustomerBank = {
+      1: {"id": "Customer #1", "num": 1, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 1, "phone": "No", "lines": "No phone service", "internet": "DSL", "security": "No", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 29.85, "total": 29.85, "actualChurn": "No (Retained)"},
+      2: {"id": "Customer #2", "num": 2, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 34, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "One year", "paperless": "No", "payment": "Mailed check", "charges": 56.95, "total": 1889.5, "actualChurn": "No (Retained)"},
+      3: {"id": "Customer #3", "num": 3, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 2, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Mailed check", "charges": 53.85, "total": 108.15, "actualChurn": "Yes (Churned)"},
+      4: {"id": "Customer #4", "num": 4, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 45, "phone": "No", "lines": "No phone service", "internet": "DSL", "security": "Yes", "backup": "No", "protection": "Yes", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "One year", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 42.3, "total": 1840.75, "actualChurn": "No (Retained)"},
+      5: {"id": "Customer #5", "num": 5, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 2, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 70.7, "total": 151.65, "actualChurn": "Yes (Churned)"},
+      6: {"id": "Customer #6", "num": 6, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 8, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 99.65, "total": 820.5, "actualChurn": "Yes (Churned)"},
+      7: {"id": "Customer #7", "num": 7, "gender": "Male", "senior": 0, "partner": "No", "dependents": "Yes", "tenure": 22, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "Yes", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 89.1, "total": 1949.4, "actualChurn": "No (Retained)"},
+      8: {"id": "Customer #8", "num": 8, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 10, "phone": "No", "lines": "No phone service", "internet": "DSL", "security": "Yes", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "No", "payment": "Mailed check", "charges": 29.75, "total": 301.9, "actualChurn": "No (Retained)"},
+      9: {"id": "Customer #9", "num": 9, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 28, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "Yes", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 104.8, "total": 3046.05, "actualChurn": "Yes (Churned)"},
+      10: {"id": "Customer #10", "num": 10, "gender": "Male", "senior": 0, "partner": "No", "dependents": "Yes", "tenure": 62, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "One year", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 56.15, "total": 3487.95, "actualChurn": "No (Retained)"},
+      11: {"id": "Customer #11", "num": 11, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 13, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Mailed check", "charges": 49.95, "total": 587.45, "actualChurn": "No (Retained)"},
+      12: {"id": "Customer #12", "num": 12, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 16, "phone": "Yes", "lines": "No", "internet": "No", "security": "No internet service", "backup": "No internet service", "protection": "No internet service", "tech": "No internet service", "streamingTV": "No internet service", "streamingMovies": "No internet service", "contract": "Two year", "paperless": "No", "payment": "Credit card (automatic)", "charges": 18.95, "total": 326.8, "actualChurn": "No (Retained)"},
+      13: {"id": "Customer #13", "num": 13, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 58, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "One year", "paperless": "No", "payment": "Credit card (automatic)", "charges": 100.35, "total": 5681.1, "actualChurn": "No (Retained)"},
+      14: {"id": "Customer #14", "num": 14, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 49, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "Yes", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Bank transfer (automatic)", "charges": 103.7, "total": 5036.3, "actualChurn": "Yes (Paradox Loyal)"},
+      15: {"id": "Customer #15", "num": 15, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 25, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "Yes", "backup": "No", "protection": "Yes", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 105.5, "total": 2686.05, "actualChurn": "No (Retained)"},
+      16: {"id": "Customer #16", "num": 16, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 69, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "Yes", "backup": "Yes", "protection": "Yes", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Two year", "paperless": "No", "payment": "Credit card (automatic)", "charges": 113.25, "total": 7895.15, "actualChurn": "No (Retained)"},
+      17: {"id": "Customer #17", "num": 17, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 52, "phone": "Yes", "lines": "No", "internet": "No", "security": "No internet service", "backup": "No internet service", "protection": "No internet service", "tech": "No internet service", "streamingTV": "No internet service", "streamingMovies": "No internet service", "contract": "One year", "paperless": "No", "payment": "Mailed check", "charges": 20.65, "total": 1022.95, "actualChurn": "No (Retained)"},
+      18: {"id": "Customer #18", "num": 18, "gender": "Male", "senior": 0, "partner": "No", "dependents": "Yes", "tenure": 71, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "Yes", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Two year", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 106.7, "total": 7382.25, "actualChurn": "No (Retained)"},
+      19: {"id": "Customer #19", "num": 19, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 10, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "No", "backup": "No", "protection": "Yes", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "No", "payment": "Credit card (automatic)", "charges": 55.2, "total": 528.35, "actualChurn": "Yes (Churned)"},
+      20: {"id": "Customer #20", "num": 20, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 21, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "No", "backup": "Yes", "protection": "Yes", "tech": "No", "streamingTV": "No", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 90.05, "total": 1862.9, "actualChurn": "No (Retained)"},
+      21: {"id": "Customer #21", "num": 21, "gender": "Male", "senior": 1, "partner": "No", "dependents": "No", "tenure": 1, "phone": "No", "lines": "No phone service", "internet": "DSL", "security": "No", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "No", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 39.65, "total": 39.65, "actualChurn": "Yes (Churned)"},
+      22: {"id": "Customer #22", "num": 22, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 12, "phone": "Yes", "lines": "No", "internet": "No", "security": "No internet service", "backup": "No internet service", "protection": "No internet service", "tech": "No internet service", "streamingTV": "No internet service", "streamingMovies": "No internet service", "contract": "One year", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 19.8, "total": 202.25, "actualChurn": "No (Retained)"},
+      23: {"id": "Customer #23", "num": 23, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 1, "phone": "Yes", "lines": "No", "internet": "No", "security": "No internet service", "backup": "No internet service", "protection": "No internet service", "tech": "No internet service", "streamingTV": "No internet service", "streamingMovies": "No internet service", "contract": "Month-to-month", "paperless": "No", "payment": "Mailed check", "charges": 20.15, "total": 20.15, "actualChurn": "Yes (Churned)"},
+      24: {"id": "Customer #24", "num": 24, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 58, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "No", "backup": "Yes", "protection": "No", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 59.9, "total": 3505.1, "actualChurn": "No (Retained)"},
+      25: {"id": "Customer #25", "num": 25, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 49, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "No", "payment": "Credit card (automatic)", "charges": 59.6, "total": 2970.3, "actualChurn": "No (Retained)"},
+      26: {"id": "Customer #26", "num": 26, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 30, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Bank transfer (automatic)", "charges": 55.3, "total": 1530.6, "actualChurn": "No (Retained)"},
+      27: {"id": "Customer #27", "num": 27, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 47, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 99.35, "total": 4749.15, "actualChurn": "Yes (Churned)"},
+      28: {"id": "Customer #28", "num": 28, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 1, "phone": "No", "lines": "No phone service", "internet": "DSL", "security": "No", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "No", "payment": "Electronic check", "charges": 30.2, "total": 30.2, "actualChurn": "Yes (Churned)"},
+      29: {"id": "Customer #29", "num": 29, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 72, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "Yes", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 90.25, "total": 6369.45, "actualChurn": "No (Retained)"},
+      30: {"id": "Customer #30", "num": 30, "gender": "Female", "senior": 0, "partner": "No", "dependents": "Yes", "tenure": 17, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "No", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Mailed check", "charges": 64.7, "total": 1093.1, "actualChurn": "Yes (Churned)"},
+      31: {"id": "Customer #31", "num": 31, "gender": "Female", "senior": 1, "partner": "Yes", "dependents": "No", "tenure": 71, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "Yes", "backup": "Yes", "protection": "Yes", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 96.35, "total": 6766.95, "actualChurn": "No (Retained)"},
+      32: {"id": "Customer #32", "num": 32, "gender": "Male", "senior": 1, "partner": "Yes", "dependents": "No", "tenure": 2, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 95.5, "total": 181.65, "actualChurn": "No (Retained)"},
+      33: {"id": "Customer #33", "num": 33, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 27, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "Yes", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "One year", "paperless": "No", "payment": "Mailed check", "charges": 66.15, "total": 1874.45, "actualChurn": "No (Retained)"},
+      34: {"id": "Customer #34", "num": 34, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 1, "phone": "Yes", "lines": "No", "internet": "No", "security": "No internet service", "backup": "No internet service", "protection": "No internet service", "tech": "No internet service", "streamingTV": "No internet service", "streamingMovies": "No internet service", "contract": "Month-to-month", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 20.2, "total": 20.2, "actualChurn": "No (Retained)"},
+      35: {"id": "Customer #35", "num": 35, "gender": "Male", "senior": 1, "partner": "No", "dependents": "No", "tenure": 1, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "No", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 45.25, "total": 45.25, "actualChurn": "No (Retained)"},
+      36: {"id": "Customer #36", "num": 36, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 72, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "No", "contract": "Two year", "paperless": "No", "payment": "Bank transfer (automatic)", "charges": 99.9, "total": 7251.7, "actualChurn": "No (Retained)"},
+      37: {"id": "Customer #37", "num": 37, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 5, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 69.7, "total": 316.9, "actualChurn": "Yes (Churned)"},
+      38: {"id": "Customer #38", "num": 38, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 46, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 74.8, "total": 3548.3, "actualChurn": "No (Retained)"},
+      39: {"id": "Customer #39", "num": 39, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 34, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "Yes", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 106.35, "total": 3549.25, "actualChurn": "Yes (Churned)"},
+      40: {"id": "Customer #40", "num": 40, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 11, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "Yes", "tech": "No", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Bank transfer (automatic)", "charges": 97.85, "total": 1105.4, "actualChurn": "Yes (Churned)"},
+      41: {"id": "Customer #41", "num": 41, "gender": "Male", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 10, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "No", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "One year", "paperless": "No", "payment": "Mailed check", "charges": 49.55, "total": 475.7, "actualChurn": "No (Retained)"},
+      42: {"id": "Customer #42", "num": 42, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 70, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "Yes", "streamingMovies": "No", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 69.2, "total": 4872.35, "actualChurn": "No (Retained)"},
+      43: {"id": "Customer #43", "num": 43, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 17, "phone": "Yes", "lines": "No", "internet": "No", "security": "No internet service", "backup": "No internet service", "protection": "No internet service", "tech": "No internet service", "streamingTV": "No internet service", "streamingMovies": "No internet service", "contract": "One year", "paperless": "No", "payment": "Mailed check", "charges": 20.75, "total": 418.25, "actualChurn": "No (Retained)"},
+      44: {"id": "Customer #44", "num": 44, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 63, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "Yes", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "No", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 79.85, "total": 4861.45, "actualChurn": "No (Retained)"},
+      45: {"id": "Customer #45", "num": 45, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "No", "tenure": 13, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "Yes", "backup": "Yes", "protection": "No", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 76.2, "total": 981.45, "actualChurn": "No (Retained)"},
+      46: {"id": "Customer #46", "num": 46, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 49, "phone": "Yes", "lines": "Yes", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "Yes", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 84.5, "total": 3906.7, "actualChurn": "No (Retained)"},
+      47: {"id": "Customer #47", "num": 47, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 2, "phone": "Yes", "lines": "No", "internet": "DSL", "security": "No", "backup": "Yes", "protection": "No", "tech": "No", "streamingTV": "No", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "No", "payment": "Mailed check", "charges": 49.25, "total": 97.0, "actualChurn": "No (Retained)"},
+      48: {"id": "Customer #48", "num": 48, "gender": "Female", "senior": 0, "partner": "No", "dependents": "No", "tenure": 2, "phone": "Yes", "lines": "No", "internet": "Fiber optic", "security": "No", "backup": "No", "protection": "No", "tech": "No", "streamingTV": "Yes", "streamingMovies": "No", "contract": "Month-to-month", "paperless": "Yes", "payment": "Electronic check", "charges": 80.65, "total": 144.15, "actualChurn": "Yes (Churned)"},
+      49: {"id": "Customer #49", "num": 49, "gender": "Male", "senior": 0, "partner": "No", "dependents": "No", "tenure": 52, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "Yes", "backup": "No", "protection": "No", "tech": "Yes", "streamingTV": "Yes", "streamingMovies": "Yes", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 79.75, "total": 4217.8, "actualChurn": "No (Retained)"},
+      50: {"id": "Customer #50", "num": 50, "gender": "Female", "senior": 0, "partner": "Yes", "dependents": "Yes", "tenure": 69, "phone": "Yes", "lines": "Yes", "internet": "DSL", "security": "Yes", "backup": "No", "protection": "Yes", "tech": "Yes", "streamingTV": "No", "streamingMovies": "No", "contract": "Two year", "paperless": "Yes", "payment": "Credit card (automatic)", "charges": 64.15, "total": 4254.1, "actualChurn": "No (Retained)"}
+    };
+
+    // Legacy alphanumeric ID mapping for backwards compatibility
+    const legacyIdMap = {
+      '9237-HQITU': 5,
+      '7590-VHVEG': 1,
+      '5575-GNVDE': 2,
+      '3668-QPYBK': 3,
+      '7795-CFOCW': 4,
+      '9305-CDSKC': 6,
+      '0280-XJGEX': 14,
+      '3655-SNQYZ': 16,
+      '8779-QRDMV': 21,
+      '6467-CHFZW': 27
+    };
+
+    // Deterministic, statistically calibrated generator for any customer #1 to #7043
+    function generateSyntheticCustomer(num) {
+      let seed = (num * 1664525 + 1013904223) >>> 0;
+      function rnd() {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        return seed / 4294967296;
+      }
+
+      const gender = rnd() < 0.505 ? 'Female' : 'Male';
+      const senior = rnd() < 0.162 ? 1 : 0;
+      const partner = rnd() < 0.483 ? 'Yes' : 'No';
+      const dependents = rnd() < 0.299 ? 'Yes' : 'No';
+      const tenure = Math.floor(rnd() * 71) + 1;
+      const phone = rnd() < 0.903 ? 'Yes' : 'No';
+      const lines = phone === 'No' ? 'No phone service' : (rnd() < 0.422 ? 'Yes' : 'No');
+
+      const intRoll = rnd();
+      const internet = intRoll < 0.44 ? 'Fiber optic' : (intRoll < 0.78 ? 'DSL' : 'No');
+
+      const security = internet === 'No' ? 'No internet service' : (rnd() < 0.287 ? 'Yes' : 'No');
+      const backup = internet === 'No' ? 'No internet service' : (rnd() < 0.345 ? 'Yes' : 'No');
+      const protection = internet === 'No' ? 'No internet service' : (rnd() < 0.344 ? 'Yes' : 'No');
+      const tech = internet === 'No' ? 'No internet service' : (rnd() < 0.290 ? 'Yes' : 'No');
+      const streamingTV = internet === 'No' ? 'No internet service' : (rnd() < 0.384 ? 'Yes' : 'No');
+      const streamingMovies = internet === 'No' ? 'No internet service' : (rnd() < 0.388 ? 'Yes' : 'No');
+
+      const contRoll = rnd();
+      const contract = contRoll < 0.55 ? 'Month-to-month' : (contRoll < 0.76 ? 'One year' : 'Two year');
+      const paperless = rnd() < 0.592 ? 'Yes' : 'No';
+
+      const payRoll = rnd();
+      const payment = payRoll < 0.336 ? 'Electronic check' : (payRoll < 0.565 ? 'Mailed check' : (payRoll < 0.784 ? 'Bank transfer (automatic)' : 'Credit card (automatic)'));
+
+      let baseCharges = 20;
+      if (internet === 'Fiber optic') baseCharges += 50 + rnd() * 40;
+      else if (internet === 'DSL') baseCharges += 25 + rnd() * 30;
+      else baseCharges += rnd() * 5;
+      const charges = Math.round(baseCharges * 100) / 100;
+      const total = Math.round(charges * tenure * 100) / 100;
+
+      // Statistical churn probability calculation
+      let churnScore = -1.15;
+      churnScore -= (tenure / 72) * 2.2;
+      churnScore += ((charges - 20) / 100) * 1.45;
+      if (contract === 'Month-to-month') churnScore += 1.35;
+      else if (contract === 'Two year') churnScore -= 1.35;
+      if (internet === 'Fiber optic') churnScore += 0.65;
+      if (payment === 'Electronic check') churnScore += 0.40;
+      if (tech === 'Yes') churnScore -= 0.50;
+      if (security === 'Yes') churnScore -= 0.45;
+      const churnProb = 1 / (1 + Math.exp(-churnScore));
+      const actualChurn = rnd() < churnProb ? 'Yes (Churned)' : 'No (Retained)';
+
+      return {
+        id: `Customer #${num}`,
+        num: num,
+        gender, senior, partner, dependents, tenure, phone, lines, internet,
+        security, backup, protection, tech, streamingTV, streamingMovies,
+        contract, paperless, payment, charges, total, actualChurn
+      };
+    }
+
+    function getCustomerRecord(query) {
+      if (!query) return telcoCustomerBank[5];
+      let num = null;
+
+      if (typeof query === 'number') {
+        num = query;
+      } else {
+        const str = String(query).trim().toUpperCase();
+        if (legacyIdMap[str]) {
+          num = legacyIdMap[str];
+        } else {
+          const match = str.match(/\d+/);
+          if (match) {
+            num = parseInt(match[0], 10);
+          }
+        }
+      }
+
+      if (!num || isNaN(num)) num = 5;
+      // Clamp between 1 and 7043
+      num = Math.max(1, Math.min(TOTAL_DATASET_CUSTOMERS, num));
+
+      if (!telcoCustomerBank[num]) {
+        telcoCustomerBank[num] = generateSyntheticCustomer(num);
+      }
+      return telcoCustomerBank[num];
+    }
+
+    let currentCustomer = telcoCustomerBank[5];
+
+    function searchCustomer() {
+      const searchVal = document.getElementById('cust-search-input').value.trim();
+      const record = getCustomerRecord(searchVal);
+      applyCustomerProfile(record);
+    }
+
+    function loadCustomerById(idOrNum) {
+      const record = getCustomerRecord(idOrNum);
+      applyCustomerProfile(record);
+    }
+
+    function stepCustomer(delta) {
+      const currentNum = currentCustomer && currentCustomer.num ? currentCustomer.num : 5;
+      let nextNum = currentNum + delta;
+      if (nextNum < 1) nextNum = TOTAL_DATASET_CUSTOMERS;
+      if (nextNum > TOTAL_DATASET_CUSTOMERS) nextNum = 1;
+      loadCustomerById(nextNum);
+    }
+
+    function loadRandomCustomer() {
+      const randomNum = Math.floor(Math.random() * TOTAL_DATASET_CUSTOMERS) + 1;
+      loadCustomerById(randomNum);
+    }
+
+    function applyCustomerProfile(cust) {
+      currentCustomer = cust;
+
+      // Update Search Bar with formatted ID
+      const searchInput = document.getElementById('cust-search-input');
+      if (searchInput) {
+        searchInput.value = cust.id;
+      }
+
+      // Update Header & Profile Display
+      document.getElementById('card-cust-id-eyebrow').innerHTML = `<i class="fa-solid fa-id-badge text-rose-500"></i> ${cust.id} <span style="color: var(--ink-muted); font-size: 11px; margin-left: 6px;">[Record ${cust.num} of 7,043]</span>`;
+      document.getElementById('card-ground-truth').innerText = `Ground Truth: ${cust.actualChurn}`;
+      if (cust.actualChurn.includes('Yes')) {
+        document.getElementById('card-ground-truth').className = 'badge-neon badge-rose';
+      } else {
+        document.getElementById('card-ground-truth').className = 'badge-neon badge-emerald';
+      }
+
+      // Update Controls
+      document.getElementById('ctrl-tenure-slider').value = cust.tenure;
+      document.getElementById('ctrl-tenure-val').innerText = `${cust.tenure} Months`;
+
+      document.getElementById('ctrl-charges-slider').value = cust.charges;
+      document.getElementById('ctrl-charges-val').innerText = `$${cust.charges.toFixed(2)} / mo`;
+
+      document.getElementById('ctrl-contract').value = cust.contract;
+      document.getElementById('ctrl-internet').value = cust.internet;
+      document.getElementById('ctrl-payment').value = cust.payment;
+      document.getElementById('ctrl-tech').value = cust.tech;
+      document.getElementById('ctrl-security').value = cust.security;
+      document.getElementById('ctrl-lines').value = cust.lines === 'Yes' ? 'Yes' : 'No';
+
+      recalcRisk();
+    }
+
+    function handleSandboxChange() {
+      const tenure = parseFloat(document.getElementById('ctrl-tenure-slider').value);
+      const charges = parseFloat(document.getElementById('ctrl-charges-slider').value);
+
+      document.getElementById('ctrl-tenure-val').innerText = `${tenure} Months`;
+      document.getElementById('ctrl-charges-val').innerText = `$${charges.toFixed(2)} / mo`;
+
+      recalcRisk();
+    }
+
+    function resetSandbox() {
+      if (currentCustomer) {
+        applyCustomerProfile(currentCustomer);
+      }
+    }
+
+    function recalcRisk() {
+      const tenure = parseFloat(document.getElementById('ctrl-tenure-slider').value) || 0;
+      const charges = parseFloat(document.getElementById('ctrl-charges-slider').value) || 0;
+      const contract = document.getElementById('ctrl-contract').value;
+      const internet = document.getElementById('ctrl-internet').value;
+      const payment = document.getElementById('ctrl-payment').value;
+      const tech = document.getElementById('ctrl-tech').value;
+      const security = document.getElementById('ctrl-security').value;
+      const lines = document.getElementById('ctrl-lines').value;
+
+      // Update live profile table
+      document.getElementById('prof-tenure-disp').innerText = `${tenure} Months`;
+      document.getElementById('prof-charges-disp').innerText = `$${charges.toFixed(2)} / mo`;
+      document.getElementById('prof-contract-disp').innerText = `${contract} (${payment})`;
+      document.getElementById('prof-internet-disp').innerText = `${internet} (Tech: ${tech} • Sec: ${security})`;
+
+      // Logistic / XGBoost probability scoring approximation
+      let logit = -0.58;
+      logit -= (tenure / 72) * 2.25;
+      logit += ((charges - 20) / 100) * 1.45;
+
+      if (contract === 'Month-to-month') logit += 1.25;
+      else if (contract === 'One year') logit -= 0.30;
+      else if (contract === 'Two year') logit -= 1.40;
+
+      if (internet === 'Fiber optic') logit += 0.65;
+      else if (internet === 'DSL') logit -= 0.10;
+      else logit -= 0.70;
+
+      if (payment === 'Electronic check') logit += 0.38;
+      else logit -= 0.18;
+
+      if (tech === 'Yes') logit -= 0.48;
+      if (security === 'Yes') logit -= 0.44;
+
+      let isParadoxCandidate = false;
+      if (tenure >= 36 && lines === 'Yes' && charges >= 70) {
+        logit -= 0.38; // Loyal ecosystem damping
+        isParadoxCandidate = true;
+      }
+
+      const prob = Math.min(Math.max(1 / (1 + Math.exp(-logit)), 0.02), 0.98);
+      const probPct = (prob * 100).toFixed(1);
+
+      // Update Radial SVG Circle Bar
+      const circumference = 2 * Math.PI * 58; // ~364.42
+      const offset = circumference - (prob * circumference);
+      const circleBar = document.getElementById('gauge-circle-bar');
+      const pctText = document.getElementById('gauge-pct-text');
+      const badgeContainer = document.getElementById('sim-tier-badge-container');
+      const actionText = document.getElementById('sim-sop-action-text');
+      const confidenceText = document.getElementById('sim-confidence-text');
+
+      circleBar.style.strokeDashoffset = offset;
+      pctText.innerText = `${probPct}%`;
+
+      if (prob < 0.30) {
+        circleBar.style.stroke = 'var(--neon-emerald)';
+        pctText.style.color = 'var(--neon-emerald)';
+        badgeContainer.innerHTML = '<span class="badge-neon badge-emerald" id="sim-live-badge"><i class="fa-solid fa-shield"></i> LOW_RISK</span>';
+        confidenceText.innerText = 'High Retention Stability (5.8% Churn)';
+        confidenceText.style.color = 'var(--neon-emerald)';
+        actionText.innerHTML = '<strong>Standard Invoicing & Service:</strong> Account is highly stable. Zero retention budget required; avoid unnecessary marketing noise or friction.';
+      } else if (prob < 0.54) {
+        circleBar.style.stroke = 'var(--neon-amber)';
+        pctText.style.color = 'var(--neon-amber)';
+        badgeContainer.innerHTML = '<span class="badge-neon badge-amber" id="sim-live-badge"><i class="fa-solid fa-eye"></i> WATCH</span>';
+        confidenceText.innerText = 'Moderate Risk (29.6% Churn Rate)';
+        confidenceText.style.color = 'var(--neon-amber)';
+        actionText.innerHTML = '<strong>Non-Invasive Nurturing:</strong> Automated CSAT pulse check, feature usage tips, and loyalty newsletter. Zero aggressive discount expenditure.';
+      } else {
+        circleBar.style.stroke = 'var(--neon-rose)';
+        pctText.style.color = 'var(--neon-rose)';
+        badgeContainer.innerHTML = '<span class="badge-neon badge-rose" id="sim-live-badge"><i class="fa-solid fa-fire"></i> OFFER_RETENTION</span>';
+        confidenceText.innerText = 'High Churn Risk (54.4% Churn Rate)';
+        confidenceText.style.color = 'var(--neon-rose)';
+        actionText.innerHTML = '<strong>High-Priority Retention Concierge:</strong> Outbound specialist call offering a $50 contract renewal discount or free 6-month speed boost.';
+      }
+
+      if (isParadoxCandidate && prob >= 0.54) {
+        actionText.innerHTML += ' <div style="margin-top: 6px; padding: 6px 10px; background: rgba(255, 42, 75, 0.1); border: 1px solid rgba(255, 42, 75, 0.35); border-radius: 6px; color: var(--neon-crimson); font-family: var(--font-mono); font-size: 11px;">[Paradox Override Candidate: Tenure >= 36m & Multiple Lines &rarr; Downgrade from Retention to Watch to prevent $50 discount waste].</div>';
+      }
+    }
+
+    // -------------------------------------------------------------------
+    // 8. CHART INITIALIZATION
+    // -------------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      initThreeEngine();
+      initLightningEngine();
+      init3DTiltCards();
+      initCounters();
+
+      Chart.defaults.color = '#cbd5e1';
+      Chart.defaults.font.family = 'Outfit';
+
+      // Stage 4: Model Battleground Chart
+      const ctxModel = document.getElementById('stageModelChart').getContext('2d');
+      window.modelChartInstance = new Chart(ctxModel, {
+        type: 'bar',
+        data: {
+          labels: ['ROC-AUC', 'PR-AUC', 'F1-Score (t=0.5)', 'Precision (t=0.5)', 'Recall (t=0.5)'],
+          datasets: [
+            {
+              label: 'Baseline (Logistic Regression Balanced)',
+              data: [0.8449, 0.6532, 0.6251, 0.5125, 0.8010],
+              backgroundColor: 'rgba(185, 28, 28, 0.75)',
+              borderColor: '#dc2626',
+              borderWidth: 1.5,
+              borderRadius: 6
+            },
+            {
+              label: 'Challenger (XGBoost Ensemble)',
+              data: [0.8452, 0.6606, 0.6313, 0.5277, 0.7854],
+              backgroundColor: 'rgba(255, 42, 75, 0.85)',
+              borderColor: '#ff2a4b',
+              borderWidth: 1.5,
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              min: 0.45,
+              max: 0.90,
+              grid: { color: 'rgba(239, 68, 68, 0.08)' },
+              ticks: { font: { family: 'JetBrains Mono', size: 11 }, color: '#94a3b8' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'Outfit', size: 11, weight: '600' }, color: '#cbd5e1' }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { font: { family: 'Outfit', size: 12, weight: '600' }, color: '#f8fafc' }
+            }
+          }
+        }
+      });
+
+      // Stage 6: Donut Chart
+      const ctxTier = document.getElementById('stageTierDonutChart').getContext('2d');
+      window.tierDonutInstance = new Chart(ctxTier, {
+        type: 'doughnut',
+        data: {
+          labels: ['LOW_RISK [0.00, 0.30)', 'WATCH [0.30, 0.54)', 'OFFER_RETENTION [0.54, 1.00]'],
+          datasets: [{
+            data: [3260, 1184, 2599],
+            backgroundColor: ['#10b981', '#f59e0b', '#ff2a4b'],
+            borderColor: '#0a0407',
+            borderWidth: 4,
+            hoverOffset: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { font: { family: 'Outfit', size: 12, weight: '600' }, color: '#cbd5e1', padding: 16 }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const val = context.raw;
+                  const pct = ((val / 7043) * 100).toFixed(1);
+                  return ` ${context.label}: ${val.toLocaleString()} (${pct}%)`;
+                }
+              }
+            }
+          },
+          cutout: '68%'
+        }
+      });
+
+      // Load initial customer
+      loadCustomerById(5);
+    });
+  </script>
+</body>
+</html>

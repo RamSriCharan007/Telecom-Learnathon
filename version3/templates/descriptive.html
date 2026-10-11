@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Descriptive Statistics · Placement Predict System{% endblock %}
+
+{% block content %}
+  <section class="stage-hero">
+    <p class="eyebrow">{{ step.eyebrow }}</p>
+    <h1>{{ step.label }}</h1>
+    <p class="hero-sub">{{ step.note }}</p>
+  </section>
+
+  <div class="perforation" aria-hidden="true"></div>
+
+  <section class="descriptive-section">
+
+    {% if not has_dataset %}
+    <div class="alert alert-error">
+      <span class="alert-tag mono">No dataset</span>
+      <span>Nothing is loaded yet. <a href="{{ url_for('upload_dataset') }}">Upload a dataset on Stage 01</a> first,
+        then come back here.</span>
+    </div>
+    {% else %}
+
+    <div class="loaded-header loaded-header-compact">
+      <span class="badge-loaded mono">Loaded</span>
+      <span class="loaded-name mono">{{ dataset_name }}</span>
+      <span class="loaded-meta">{{ stats.overview.columns }} columns · {{ stats.overview.rows }} rows</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-value mono">{{ stats.overview.rows }}</span>
+        <span class="stat-label">Rows</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value mono">{{ stats.overview.numeric_count }}</span>
+        <span class="stat-label">Numeric columns</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value mono">{{ stats.overview.categorical_count }}</span>
+        <span class="stat-label">Categorical columns</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value mono">{{ stats.overview.missing_total }}</span>
+        <span class="stat-label">Missing cells ({{ stats.overview.missing_pct }}%)</span>
+      </div>
+    </div>
+
+    {% if stats.numeric_rows %}
+    <h3 class="panel-subhead">Numeric features</h3>
+    <div class="preview-scroll">
+      <table class="preview-table stats-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Count</th>
+            <th>Mean</th>
+            <th>Std Dev</th>
+            <th>Min</th>
+            <th>25%</th>
+            <th>Median</th>
+            <th>75%</th>
+            <th>Max</th>
+            <th>Skew</th>
+            <th>Missing</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in stats.numeric_rows %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td class="mono">{{ row.count }}</td>
+            <td class="mono">{{ row.mean }}</td>
+            <td class="mono">{{ row.std }}</td>
+            <td class="mono">{{ row.min }}</td>
+            <td class="mono">{{ row.q25 }}</td>
+            <td class="mono">{{ row.median }}</td>
+            <td class="mono">{{ row.q75 }}</td>
+            <td class="mono">{{ row.max }}</td>
+            <td class="mono">{{ row.skew }}</td>
+            <td class="mono">{{ row.missing }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if stats.categorical_rows %}
+    <h3 class="panel-subhead">Categorical features</h3>
+    <div class="preview-scroll">
+      <table class="preview-table stats-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Count</th>
+            <th>Unique</th>
+            <th>Top value</th>
+            <th>Frequency</th>
+            <th>Missing</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in stats.categorical_rows %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td class="mono">{{ row.count }}</td>
+            <td class="mono">{{ row.unique }}</td>
+            <td>{{ row.top }}</td>
+            <td class="mono">{{ row.freq }}</td>
+            <td class="mono">{{ row.missing }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if stats.grouped %}
+    <h3 class="panel-subhead">Numeric feature means, split by {{ stats.grouped.target }}</h3>
+    <div class="preview-scroll">
+      <table class="preview-table stats-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            {% for g in stats.grouped.groups %}
+            <th>{{ g }} <span class="mono group-count">(n={{ stats.grouped.group_counts[loop.index0] }})</span></th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in stats.grouped.feature_rows %}
+          <tr>
+            <td>{{ row.name }}</td>
+            {% for val in row.group_values %}
+            <td class="mono">{{ val }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if not stats.numeric_rows and not stats.categorical_rows %}
+    <p>No columns found to summarise.</p>
+    {% endif %}
+
+    {% endif %}
+
+  </section>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Data Visualization · Placement Predict System{% endblock %}
+
+{% block content %}
+  <section class="stage-hero">
+    <p class="eyebrow">{{ step.eyebrow }}</p>
+    <h1>{{ step.label }}</h1>
+    <p class="hero-sub">{{ step.note }}</p>
+  </section>
+
+  <div class="perforation" aria-hidden="true"></div>
+
+  <section class="visualize-section">
+
+    {% if not has_dataset %}
+    <div class="alert alert-error">
+      <span class="alert-tag mono">No dataset</span>
+      <span>Nothing is loaded yet. <a href="{{ url_for('upload_dataset') }}">Upload a dataset on Stage 01</a> first,
+        then come back here.</span>
+    </div>
+    {% elif not target_ok %}
+    <div class="alert alert-error">
+      <span class="alert-tag mono">No usable target</span>
+      <span>Couldn't find a placement-like target column with 2–10 outcomes to compare features against.
+        {% if target %}Closest guess was '{{ target }}'.{% endif %}</span>
+    </div>
+    {% else %}
+
+    <div class="loaded-header loaded-header-compact">
+      <span class="badge-loaded mono">Loaded</span>
+      <span class="loaded-name mono">{{ dataset_name }}</span>
+      <span class="loaded-meta">Comparing against <strong>{{ target }}</strong></span>
+    </div>
+
+    <h3 class="panel-subhead">Numeric feature vs {{ target }}</h3>
+    <p class="field-hint field-hint-neutral">Box plot of the feature's spread within each {{ target }} group.</p>
+    <form class="feature-form" id="vizNumericForm">
+      <div class="field-group">
+        <label for="vizNumericSelect">Feature</label>
+        <select id="vizNumericSelect" class="dropdown">
+          <option value="" disabled selected>Choose a numeric feature…</option>
+          {% for feat in numeric_options %}
+          <option value="{{ feat }}">{{ feat }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" id="vizNumericBtn" {{ 'disabled' if not numeric_options }}>Visualize</button>
+    </form>
+    {% if not numeric_options %}
+    <p class="field-hint">No numeric feature columns found (besides the target).</p>
+    {% endif %}
+
+    <div class="result-panel" id="vizNumericPanel" hidden>
+      <div class="result-header">
+        <h3 id="vizNumericTitle">—</h3>
+        <span class="badge-loaded mono" id="vizNumericStatus"></span>
+      </div>
+      <div id="vizNumericBody"></div>
+    </div>
+
+    <div class="perforation" aria-hidden="true"></div>
+
+    <h3 class="panel-subhead">Categorical feature vs {{ target }}</h3>
+    <p class="field-hint field-hint-neutral">100%-stacked bar showing the {{ target }} split within each category.</p>
+    <form class="feature-form" id="vizCategoricalForm">
+      <div class="field-group">
+        <label for="vizCategoricalSelect">Feature</label>
+        <select id="vizCategoricalSelect" class="dropdown">
+          <option value="" disabled selected>Choose a categorical feature…</option>
+          {% for feat in categorical_options %}
+          <option value="{{ feat }}">{{ feat }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" id="vizCategoricalBtn" {{ 'disabled' if not categorical_options }}>Visualize</button>
+    </form>
+    {% if not categorical_options %}
+    <p class="field-hint">No categorical feature columns found (besides the target).</p>
+    {% endif %}
+
+    <div class="result-panel" id="vizCategoricalPanel" hidden>
+      <div class="result-header">
+        <h3 id="vizCategoricalTitle">—</h3>
+        <span class="badge-loaded mono" id="vizCategoricalStatus"></span>
+      </div>
+      <div id="vizCategoricalBody"></div>
+    </div>
+
+    {% endif %}
+
+  </section>
+{% endblock %}

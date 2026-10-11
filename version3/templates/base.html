@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Placement Predict System{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <aside class="pipeline-sidebar">
+      <a class="sidebar-brand" href="{{ url_for('home') }}">
+        <span class="brand-mark">PP</span>
+        <span class="brand-text">
+          <span class="brand-line-1">Placement Predict</span>
+          <span class="brand-line-1">System</span>
+          <span class="brand-line-2">ML Pipeline</span>
+        </span>
+      </a>
+
+      <nav class="pipeline-stepper" aria-label="ML pipeline stages">
+        <ol>
+          {% for step in pipeline_steps %}
+          <li class="{{ 'is-active' if step.id == active_step else '' }}">
+            <a href="{{ url_for(step.endpoint) }}">
+              <span class="step-node"><span class="step-num">{{ step.step }}</span></span>
+              <span class="step-label">{{ step.label }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="{{ url_for('home') }}" class="sidebar-overview-link">← Overview</a>
+        <span class="mono">2026-08</span>
+      </div>
+    </aside>
+
+    <div class="app-body">
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-rule"></div>
+        <div class="footer-row">
+          <span>Placement Predict System — CGPA · IQ · Placement pipeline</span>
+          <span class="mono">{{ app_build }}</span>
+        </div>
+      </footer>
+    </div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}?v=2"></script>
+</body>
+</html>

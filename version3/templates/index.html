@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Placement Predict System{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Placement Predict System</p>
+      <h1>A nine-stage pipeline for CGPA · IQ · Placement</h1>
+      <p class="hero-sub">Upload your dataset, walk it through analysis and preprocessing, train a
+        classifier, and predict placement outcomes — one stage at a time, left to right.</p>
+      <a class="btn btn-primary" href="{{ url_for('upload_dataset') }}">Start with Upload Dataset →</a>
+    </div>
+    <div class="hero-stamp">
+      <span class="stamp-value">{{ stats.placement_rate }}%</span>
+      <span class="stamp-label mono">Placement rate</span>
+    </div>
+  </section>
+
+  <div class="perforation" aria-hidden="true"></div>
+
+  <section class="stat-row">
+    <div class="stat-card">
+      <span class="stat-value mono">{{ stats.total_students }}</span>
+      <span class="stat-label">Records on file</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ stats.avg_cgpa }}</span>
+      <span class="stat-label">Average CGPA</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ stats.avg_iq }}</span>
+      <span class="stat-label">Average IQ</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ stats.not_placed_rate }}%</span>
+      <span class="stat-label">Not placed</span>
+    </div>
+  </section>
+
+  <section class="roadmap">
+    <h2>Pipeline roadmap</h2>
+    <ol class="roadmap-list">
+      {% for step in pipeline_steps %}
+      <li class="roadmap-row">
+        <a href="{{ url_for(step.endpoint) }}">
+          <span class="roadmap-step mono">{{ step.step }}</span>
+          <span class="roadmap-body">
+            <span class="roadmap-label">{{ step.label }}</span>
+            <span class="roadmap-note">{{ step.note }}</span>
+          </span>
+          <span class="roadmap-arrow">→</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ step.label }} · Placement Predict System{% endblock %}
+
+{% block content %}
+  <section class="stage-hero">
+    <p class="eyebrow">{{ step.eyebrow }}</p>
+    <h1>{{ step.label }}</h1>
+    <p class="hero-sub">{{ step.note }}</p>
+  </section>
+
+  <div class="perforation" aria-hidden="true"></div>
+
+  <section class="stub-panel">
+    <span class="badge-stub mono">Not wired up yet</span>
+    <p>This stage is a placeholder in the pipeline. Come back once the earlier stages
+      are wired up with real logic.</p>
+  </section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{
+    "Contract_Type": "Month-to-Month contracts are the single most acute risk driver for customer churn (Odds Ratio ~ 3.2x). Customers on 1-year and 2-year contracts show an 85% drop in churn probability. Operational Recommendation: Incentivize long-term commitment via month 3/6 renewal promotions.",
+    "Tenure_Dynamics": "Tenure exhibits a sharp 'Churn Cliff' within the first 0-12 months. Early onboarding failure is the primary churn mechanism. Once a customer reaches 24+ months, inertia and service stickiness reduce churn risk to baseline levels. Operational Recommendation: Deploy a proactive 90-day onboarding concierge team.",
+    "Monthly_Charges_and_Fiber": "Monthly charges above $65-$70/mo\u2014predominantly driven by standalone Fiber Optic internet without security add-ons\u2014experience the highest churn velocity. Customers paying premium rates without perceived technical reliability churn rapidly. Operational Recommendation: Bundle free Tech Support / Online Security with premium Fiber tiers.",
+    "Payment_Friction": "Payment via Electronic Check exhibits elevated churn risk compared to automated Bank Transfer or Credit Card. Electronic check users face monthly billing friction and manual payment dropouts. Operational Recommendation: Offer a $5 auto-pay bill credit to migrate electronic check customers to automated credit card billing."
+}

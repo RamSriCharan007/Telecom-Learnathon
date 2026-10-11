@@ -1,0 +1,22 @@
+Column,Type,Description,Role
+customerID,Categorical (ID),Unique customer identifier,Dropped (Leakage Risk)
+gender,Binary Categorical,"Customer gender (Male, Female)",Feature
+SeniorCitizen,Binary (0/1),Whether customer is a senior citizen,Feature
+Partner,Binary Categorical,"Whether customer has a partner (Yes, No)",Feature
+Dependents,Binary Categorical,"Whether customer has dependents (Yes, No)",Feature
+tenure,Integer Numeric,Number of months customer has stayed with company,Key Feature
+PhoneService,Binary Categorical,"Whether customer has phone service (Yes, No)",Feature
+MultipleLines,Categorical (3 levels),"Whether customer has multiple lines (No, Yes, No phone service)",Feature
+InternetService,Categorical (3 levels),"Internet provider type (DSL, Fiber optic, No)",Key Feature
+OnlineSecurity,Categorical (3 levels),"Online security add-on (Yes, No, No internet)",Feature
+OnlineBackup,Categorical (3 levels),"Online backup add-on (Yes, No, No internet)",Feature
+DeviceProtection,Categorical (3 levels),"Device protection plan (Yes, No, No internet)",Feature
+TechSupport,Categorical (3 levels),"Premium tech support add-on (Yes, No, No internet)",Feature
+StreamingTV,Categorical (3 levels),"Streaming TV service (Yes, No, No internet)",Feature
+StreamingMovies,Categorical (3 levels),"Streaming movies service (Yes, No, No internet)",Feature
+Contract,Categorical (3 levels),"Contract term (Month-to-month, One year, Two year)",Key Feature
+PaperlessBilling,Binary Categorical,"Paperless billing enrollment (Yes, No)",Feature
+PaymentMethod,Categorical (4 levels),"Payment method (Electronic check, Mailed check, Bank transfer, Credit card)",Key Feature
+MonthlyCharges,Continuous Numeric,Amount charged to customer monthly ($),Key Feature
+TotalCharges,Continuous Numeric,"Total amount charged to customer ($), imputed if blank",Key Feature
+Churn,Binary Target,"Whether customer churned within last month (Yes=1, No=0)",Target Variable

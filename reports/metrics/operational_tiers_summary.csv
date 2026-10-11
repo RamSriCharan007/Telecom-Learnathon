@@ -1,0 +1,4 @@
+Tier,Probability_Range,Customer_Count,Percentage,Operational_Action
+LOW_RISK,"[0.00, 0.30)",3260,46.3%,Standard Service & Regular Invoicing; No invasive outreach.
+WATCH,"[0.30, 0.54)",1184,16.8%,"Proactive engagement, CSAT check, newsletter, feature adoption tips."
+OFFER_RETENTION,"[0.54, 1.00]",2599,36.9%,High-priority Retention Specialist call; Contract renewal discounts / upgrade voucher.
